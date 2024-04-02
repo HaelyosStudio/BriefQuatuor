@@ -12,4 +12,16 @@
 
  <!--  -->
 
-# new user :
+# David :
+
+## TODO :
+
+## WIP :
+
+## TO CHECK :
+
+## TO BLOCK :
+
+## VALID :
+
+ <!--  -->
