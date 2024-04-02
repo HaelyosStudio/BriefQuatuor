@@ -1,5 +1,5 @@
 .env
-configRouter.php
+App/Config/configRouter.php
 # package.json
 # package-lock.json
 # tsconfig.json
