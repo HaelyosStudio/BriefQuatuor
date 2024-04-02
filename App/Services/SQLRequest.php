@@ -12,12 +12,13 @@ trait SQLRequest
 
     /**
      * @param  string  $table
-     * @param  array <string,mixed>  $columnsValue
-     * @return boolean
+     * @param  array <string, mixed>  $columnsValue
+     * $param boolean $object
+     * @return boolean | object
      */
-    public function create(string $table, array $columnsValue): bool
+    public function create(string $table, array $columnsValue, bool $object = false): bool | object
     {
-
+        $Table = ucfirst($table);
         foreach ($columnsValue as $key => $value) {
             $columns[] = $key;
             $values[] = ":$key";
@@ -30,8 +31,15 @@ trait SQLRequest
         try {
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
-            $stmt->closeCursor();
-            return true;
+            if ($object === true) {
+                $result = $stmt->setFetchMode(PDO::FETCH_CLASS, "App\\Models\\$Table");
+                $result = $stmt->fetch();
+                $stmt->closeCursor();
+                return $result;
+            } else {
+                $stmt->closeCursor();
+                return true;
+            }
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
             return false;
@@ -95,15 +103,21 @@ trait SQLRequest
      * @param  string  $uuid
      * @return boolean
      */
-    public function update(string $table, array $setColumnsData, string $uuid): bool
+    public function update(string $table, array $setColumnsData, string $where, string $id): bool
     {
         foreach ($setColumnsData as $key => $value) {
             $params[$key] = $value;
-            $params['uuid'] = $uuid;
+            if ($where === 'uuid') {
+                $data = "UUID_TO_BIN(:$where)";
+                $params['uuid'] = $id;
+            } else {
+                $data = ":$where";
+                $params['id'] = $id;
+            }
             $columns[] = "$key = :$key";
         }
         $setColumns = implode(", ", $columns);
-        $sql = "UPDATE $table SET $setColumns  WHERE uuid = UUID_TO_BIN(:uuid)";
+        $sql = "UPDATE $table SET $setColumns  WHERE $where = $data";
         try {
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
@@ -120,12 +134,20 @@ trait SQLRequest
      * @param  string $uuid
      * @return boolean
      */
-    public function delete(string $table, string $uuid): bool
+    public function delete(string $table, string $where, string $id): bool
     {
-        $sql = "DELETE FROM $table WHERE uuid = UUID_TO_BIN(:uuid)";
-        $params = [
-            'uuid' => $uuid
-        ];
+        if ($where === 'uuid') {
+            $data = "UUID_TO_BIN(:$where)";
+            $params = [
+                'uuid' => $id
+            ];
+        } else {
+            $data = ":$where";
+            $params = [
+                'id' => $id
+            ];
+        }
+        $sql = "DELETE FROM $table WHERE $where = $data";
         try {
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
