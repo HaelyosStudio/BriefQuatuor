@@ -12,4 +12,17 @@
 
  <!--  -->
 
-# new user :
+# David :
+
+## TODO :
+ - initDB
+
+## WIP :
+
+## TO CHECK :
+
+## TO BLOCK :
+
+## VALID :
+
+ <!--  -->
