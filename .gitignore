@@ -3,4 +3,4 @@
 # package-lock.json
 # tsconfig.json
 # node_modules/
-App/Config/configRouter.php
+/App/Config/configRouter.php
