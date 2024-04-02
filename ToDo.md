@@ -15,6 +15,7 @@
 # David :
 
 ## TODO :
+ - initDB
 
 ## WIP :
 
