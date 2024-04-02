@@ -1,4 +1,4 @@
 <?php
-const ROOT = "/Brief_Five_Composer";
+const ROOT = "/BriefQuatuor";
 
 const URL_HOMEPAGE = ROOT . "/";
