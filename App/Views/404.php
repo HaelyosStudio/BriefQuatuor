@@ -1,3 +1,5 @@
+<?php debug($_SERVER['REQUEST_URI'], 0) ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +11,7 @@
 </head>
 
 <body class="bcg-404">
-
+<h1>DEBUG</h1>
 </body>
 
 </html>
