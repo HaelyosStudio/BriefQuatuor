@@ -1,0 +1,44 @@
+@import url(./Imports/root.css);
+
+/*********************************** Partie Accueil ***********************************/
+.mainContainer {
+    h3 {
+        margin: 40px 0px;
+    }
+
+    .courseContainer {
+        display: flex;
+        flex-direction: column !important;
+        width: 100%;
+        height: 180px;
+        background-color: var(--greyMainColor);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 25px 45px 25px 45px;
+        gap: 30px;
+
+        .courseInfos {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 67px;
+        }
+
+        .presenceButton {
+            display: flex;
+            justify-content: flex-end;
+            height: 33px;
+            width: 100%;
+
+            button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 33px;
+            }
+        }
+    }
+}
+
+/*********************************** Partie Promotions ***********************************/
