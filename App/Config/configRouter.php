@@ -1,4 +1,3 @@
 <?php
-const ROOT = "/BriefQuatuor";
 
-const URL_HOMEPAGE = ROOT . "/";
+const URL_HOMEPAGE = "/";
