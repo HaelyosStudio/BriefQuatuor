@@ -8,13 +8,17 @@ require_once __DIR__ . '/./Includes/header.php';
     <section class="mainContent">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Accueil</button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Promotions</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Utilisateurs</button>
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Accueil</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Promotions</button>
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                    type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Utilisateurs</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active mainContainer" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            <div class="tab-pane fade show active mainContainer" id="nav-home" role="tabpanel"
+                aria-labelledby="nav-home-tab" tabindex="0">
                 <h3>Cours du jour</h3>
                 <div class="courseContainer">
                     <div class="courseInfos">
@@ -30,9 +34,12 @@ require_once __DIR__ . '/./Includes/header.php';
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">...</div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">...</div>
-            <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                ...</div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                ...</div>
+            <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab"
+                tabindex="0">...</div>
         </div>
     </section>
 
@@ -47,7 +54,7 @@ require_once __DIR__ . '/./Includes/header.php';
                     <input type="email" id="mail" name="mail" class="form-control" required />
                 </div>
                 <button type="button" class="btn btn-primary">Connexion</button>
-            </form>    
+            </form>
 
         </div>
     </section>
