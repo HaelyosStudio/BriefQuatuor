@@ -27,3 +27,15 @@
             <button type="submit" class="btn btn-primary">Connexion</button>
         </form>
     </div>
+    <div class="container disabled">
+        <div class="d-flex flex-column row justify-content-center col-md-6">
+            <h1>Bienvenue</h1>
+            <form action="">
+                <div class="form-group">
+                    <label for="mail">Email</label>
+                    <input type="email" id="mail" name="mail" class="form-control" required />
+                </div>
+                <button type="button" class="btn btn-primary">Connexion</button>
+            </form>
+        </div>
+    </div>
