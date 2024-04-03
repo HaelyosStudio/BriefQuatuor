@@ -1,5 +1,6 @@
 <?php
-// This trait is only functional with the same structure of this app and with uuid
+// Basic CRUD + getUuid 
+// This trait is only functional with the same structure of this app
 
 namespace App\Services;
 
@@ -45,8 +46,6 @@ trait SQLRequest
             return false;
         }
     }
-
-
 
     /**
      * @param  string $table
