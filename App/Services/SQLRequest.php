@@ -12,8 +12,8 @@ trait SQLRequest
 
     /**
      * @param  string  $table
-     * @param  array <string, mixed>  $columnsValue
-     * $param boolean $object
+     * @param  array <string, mixed>   $columnsValue
+     * @param  boolean $object
      * @return boolean | object
      */
     public function create(string $table, array $columnsValue, bool $object = false): bool | object
@@ -32,7 +32,7 @@ trait SQLRequest
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
             if ($object === true) {
-                $result = $stmt->setFetchMode(PDO::FETCH_CLASS, "App\\Models\\$Table");
+                $stmt->setFetchMode(PDO::FETCH_CLASS, "App\\Models\\$Table");
                 $result = $stmt->fetch();
                 $stmt->closeCursor();
                 return $result;
@@ -49,8 +49,8 @@ trait SQLRequest
 
 
     /**
-     * @param string $table
-     * @return object[]
+     * @param  string $table
+     * @return array
      */
     public function findAll(string $table): array
     {
@@ -71,7 +71,7 @@ trait SQLRequest
      * @param  string $table
      * @param  string $where
      * @param  string $paramsData
-     * @return object|false
+     * @return void
      */
     public function findOne(string $table, string $where, string $paramsData): object | false
     {
@@ -88,7 +88,7 @@ trait SQLRequest
         try {
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute($params);
-            $result = $stmt->setFetchMode(PDO::FETCH_CLASS, "App\\Models\\$Table");
+            $stmt->setFetchMode(PDO::FETCH_CLASS, "App\\Models\\$Table");
             $result = $stmt->fetch();
             $stmt->closeCursor();
             return $result;
@@ -99,8 +99,9 @@ trait SQLRequest
 
     /**
      * @param  string  $table
-     * @param  array   $setColumnsData
-     * @param  string  $uuid
+     * @param  array <string, mixed>   $setColumnsData
+     * @param  string  $where
+     * @param  string  $id
      * @return boolean
      */
     public function update(string $table, array $setColumnsData, string $where, string $id): bool
@@ -130,8 +131,9 @@ trait SQLRequest
     }
 
     /**
-     * @param  string $table
-     * @param  string $uuid
+     * @param  string  $table
+     * @param  string  $where
+     * @param  string  $id
      * @return boolean
      */
     public function delete(string $table, string $where, string $id): bool
