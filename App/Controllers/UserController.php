@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 
-use App\Models\Repositories\UsersRepository;
+use App\Models\Repositories\UserRepository;
 
 use App\Services\Response;
 use App\Services\Constraints;
@@ -36,18 +36,39 @@ final class UserController
     }
 
     public function userEmail()
-    {
-        $rawBody = file_get_contents("php://input");
-        $body = json_decode($rawBody, true);
+{
+    $rawBody = file_get_contents("php://input");
 
-        // Renvoie le contenu de la requête reçue à des fins d'exemple et de débogage.
-        // Autrement, cette opération n'aurait pas de sens.
-        $jsonReponse = json_encode($body);
+    $body = json_decode($rawBody, true);
 
+    if (isset($body['email'])) {
+        $email = $body['email'];
+        $userRepo = new UserRepository();
+        if ($userRepo->findOne('User', 'email', $email)) {
+            $user = $userRepo->findOne('User', 'email', $email);
+            $userActive = $user->getActive();
+            if($userActive) {
+                $response = ['email_exists' => true, 'active' => true, 'email' => $email];
+                header('Content-Type: application/json');
+                echo ($response);
+            } else {
+                $response = ['email_exists' => true, 'active' => false, 'email' => $email];
+                header('Content-Type: application/json');
+                echo ($response);
+            }
+            
+        } else {
+            $response = ['email_exists' => false, 'email' => $email];
+            header('Content-Type: application/json');
+            echo ($response);
+        }
+    } else {
+        $response = ['success' => false, 'message' => 'Clé "email" manquante dans la requête'];
         header('Content-Type: application/json');
-
-        echo ($jsonReponse);
+        echo json_encode($response);
     }
+}
+
 
     public function userConfirmPassword()
     {
