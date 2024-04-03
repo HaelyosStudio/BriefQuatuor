@@ -30,9 +30,7 @@
  # Adam :
 
 ## TODO :
- - HTML/CSS/JS de l'Onglet Infos Générales
- - HTML/CSS/JS de l'Onglet Retards
- - HTML/CSS/JS de l'Onglet Absences
+
 
 ## WIP :
 
@@ -48,6 +46,9 @@
  - HTML/CSS/JS du Form Email
  - HTML/CSS/JS du Form Password+Confirm
  - HTML/CSS/JS du Form Password
+ - HTML/CSS/JS de l'Onglet Infos Générales
+ - HTML/CSS/JS de l'Onglet Retards
+ - HTML/CSS/JS de l'Onglet Absences
 
  <!--  -->
 
