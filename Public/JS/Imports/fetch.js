@@ -1,17 +1,15 @@
-const btn = document.querySelector('#btn-test');
-const mail = document.querySelector('#mail');
-const password = document.querySelector('#password');
+const base_url = 'http://localhost/~david/brief_quatuor/BriefQuatuor/'
 
-btn.addEventListener('click', () => {
-    const mailValue = mail.value;
-    const passwordValue = password.value;
+export function fetchFormEmail() {
+    const connectEmail = document.querySelector('#connectEmail');
+
+    const emailValue = connectEmail.value;
 
     const formData = {
-        mail: mailValue,
-        password: passwordValue
+        email: emailValue
     };
 
-    fetch('http://localhost/~david/brief_quatuor/BriefQuatuor/checkmail', {
+    fetch(base_url + 'checkmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -30,4 +28,4 @@ btn.addEventListener('click', () => {
     .catch((error) => {
         console.error("Erreur lors de la requête :", error);
     });
-});
+}

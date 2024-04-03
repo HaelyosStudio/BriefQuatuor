@@ -37,6 +37,16 @@ final class UserController
 
     public function userEmail()
     {
+        $rawBody = file_get_contents("php://input");
+        $body = json_decode($rawBody, true);
+
+        // Renvoie le contenu de la requête reçue à des fins d'exemple et de débogage.
+        // Autrement, cette opération n'aurait pas de sens.
+        $jsonReponse = json_encode($body);
+
+        header('Content-Type: application/json');
+
+        echo ($jsonReponse);
     }
 
     public function userConfirmPassword()

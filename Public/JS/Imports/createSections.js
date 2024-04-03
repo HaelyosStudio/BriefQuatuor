@@ -1,3 +1,5 @@
+import { fetchFormEmail } from "./fetch.js";
+
 export function createForm1() {
 
   const formContainer = document.createElement("div");
@@ -23,7 +25,7 @@ export function createForm1() {
   emailInput.type = "email";
   emailInput.className = "form-control";
   emailInput.id = "connectEmail";
-  emailInput.placeholder = "Entrez votre mot de passe";
+  emailInput.placeholder = "Entrez votre email";
   emailInput.required = true;
 
   const emailDiv = document.createElement("div");
@@ -35,6 +37,7 @@ export function createForm1() {
   submitButton.type = "button";
   submitButton.className = "btn btn-primary";
   submitButton.textContent = "Connexion";
+  submitButton.addEventListener("click", fetchFormEmail);
 
   form.appendChild(emailDiv);
   form.appendChild(submitButton);
