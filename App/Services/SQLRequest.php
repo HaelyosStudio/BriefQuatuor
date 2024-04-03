@@ -71,7 +71,7 @@ trait SQLRequest
      * @param  string $table
      * @param  string $where
      * @param  string $paramsData
-     * @return void
+     * @return object | false
      */
     public function findOne(string $table, string $where, string $paramsData): object | false
     {

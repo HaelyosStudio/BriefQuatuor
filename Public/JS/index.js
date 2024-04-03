@@ -13,4 +13,4 @@ import {
   createTableRow,
 } from "./Imports/createSections.js";
 
-window.onload = createGeneralContent();
+window.onload = createForm1();
