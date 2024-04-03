@@ -1,4 +1,4 @@
-@import url(./Imports/root.css);
+@import url(./root.css);
 
 /*********************************** Partie Accueil ***********************************/
 .mainContainer {
@@ -42,3 +42,79 @@
 }
 
 /*********************************** Partie Promotions ***********************************/
+
+.promoTitleButton {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 62px;
+    margin: 40px 0px;
+
+    .leftInfos {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 31px;
+        padding: 6px 12px 6px 12px;
+    }
+}
+
+.tableButtons {
+    background-color: transparent;
+    color: var(--bootstrapColor);
+    border: none;
+
+}
+
+/*********************************** Partie utilisateurs ***********************************/
+
+.userTitleButton {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 62px;
+    margin: 40px 0px;
+
+    .leftInfos {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 31px;
+        padding: 6px 12px 6px 12px;
+    }
+}
+
+/********************************** Partie Infos Générales **********************************/
+
+.generalContent {
+
+    nav {
+
+        div button:first-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4px 8px 0px 0px;
+            width: 74px;
+            height: 33px;
+        }
+    }
+}
+
+/*********************************** Partie Retards ***********************************/
+
+
+
+/*********************************** Partie Absences ***********************************/
