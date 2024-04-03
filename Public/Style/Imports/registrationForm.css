@@ -1,0 +1,73 @@
+@import url(./root.css);
+
+.registrationForm2 {
+    margin: 182px auto;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 482px;
+    background-color: var(--greyMainColor);
+    border-radius: 3px;
+    padding: 40px;
+    gap: 50px;
+
+    .formHeader {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .formInputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 320px;
+        height: 164px;
+        gap: 30px;
+
+        .formItem {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+    }
+}
+
+.registrationForm3 {
+    margin: 182px auto;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 327px;
+    background-color: var(--greyMainColor);
+    border-radius: 3px;
+    padding: 40px;
+    gap: 50px;
+
+    .formHeader {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .formInputs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 320px;
+        height: 164px;
+        gap: 30px;
+
+        .formItem {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+    }
+}
