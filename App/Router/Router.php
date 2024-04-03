@@ -21,9 +21,24 @@ class Router
                     $user->homePage();
                 }
                 break;
-
-
-
+            case URL_HOMEPAGE . 'checkmail':
+                $user = new UserController();
+                if ($method === 'POST') {
+                    $user->userEmail();
+                }
+                break;
+            case URL_HOMEPAGE . 'confirmPassword':
+                $user = new UserController();
+                if ($method === 'POST') {
+                    $user->userConfirmPassword();
+                }
+                break;
+            case URL_HOMEPAGE . 'login':
+                $user = new UserController();
+                if ($method === 'POST') {
+                    $user->userLogin();
+                }
+                break;
 
             default:
                 header("HTTP/1.0 404 Not Found");
