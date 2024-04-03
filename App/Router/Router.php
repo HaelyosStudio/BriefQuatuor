@@ -4,7 +4,6 @@ namespace App\Router;
 
 
 use App\Controllers\AuthController;
-use App\Controllers\AuthController;
 
 require __DIR__ . '/../Config/configRouter.php';
 
