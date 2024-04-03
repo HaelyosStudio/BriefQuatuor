@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/./Includes/header.php';
+
 ?>
 <main>
     <?php include_once __DIR__ . '/./Includes/registrationForms.php' ?>

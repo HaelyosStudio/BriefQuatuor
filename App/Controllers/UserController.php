@@ -29,46 +29,24 @@ final class UserController
     use IssetFormData;
     use Password;
 
-    // methods
+
     public function homePage()
     {
-        unset($_SESSION['csrfLogin']);
-        unset($_SESSION['csrfRegister']);
-        unset($_SESSION['csrfUpdate']);
-
-        $this->render('home');
+        $csrfRegister = $this->createCSRFToken('CSRFRegister');
+        $viewData = ['CSRFRegister' => $csrfRegister];
+        $this->render('home', $viewData);
     }
 
-
-    public function userRegister()
+    public function userEmail()
     {
         if ($this->verifyCSRFToken($_POST['csrfRegister'], $_SESSION['csrfRegister'])) {
             if ($this->issetFormData($_POST)) {
                 if ($this->notEmpty($_POST) === true) {
-                    if ($this->minLengthConstraint($_POST['firstnameRegister'], 3) && $this->maxLengthConstraint($_POST['firstnameRegister'], 20)) {
-                        $formData['firstname'] = $_POST['firstnameRegister'];
-                    } else {
-                        $error['firstnameLength'] = 'Your first name must be between 3 and 20 characters';
-                    };
-                    if ($this->minLengthConstraint($_POST['lastnameRegister'], 2) && $this->maxLengthConstraint($_POST['lastnameRegister'], 20)) {
-                        $formData['lastname'] = $_POST['lastnameRegister'];
-                    } else {
-                        $error['lastnameLength'] = 'Your last name must be between 1 and 20 characters';
-                    };
-                    if (filter_var($_POST['mailRegister'], FILTER_VALIDATE_EMAIL) !== false) {
-                        if ($this->minLengthConstraint($_POST['mailRegister'], 5) && $this->maxLengthConstraint($_POST['mailRegister'], 100)) {
-                            $formData['mail'] = $_POST['mailRegister'];
-                        } else {
-                            $error['mailLength'] = 'Your mail must be between 5 and 20 characters';
-                        };
+                    if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) !== false) {
+                        $email = $_POST['email'];
                     } else {
                         $error['mailFormat'] = 'Your email is not in the correct format';
                     }
-                    if ($this->checkDoublePassword($_POST['firstPasswordRegister'], $_POST['secondPasswordRegister'])) {
-                        $password = $_POST['firstPasswordRegister'];
-                    } else {
-                        $error['password'] = 'Your confirmation password does not match the 1st';
-                    };
                 } else {
                     $error = [];
                     $error += $this->notEmpty($_POST);
@@ -78,101 +56,114 @@ final class UserController
                     $csrfRegister = $this->createCSRFToken('csrfRegister');
                     $viewData = [
                         'csrfRegister' => $csrfRegister,
-                        'error' => $error
+                        'error' => $error,
+                        'etat' => false,
                     ];
-                    $this->render('register', $viewData);
+                    http_response_code(400);
+                    $response = json_encode($viewData);
+                    header('Content-Type: application/json');
+                    echo ($response);
                 } else {
-                    $formDataSanitize = $this->sanitize($formData);
-                    $passwordHash = $this->PasswordHash($password);
-                    debug($formDataSanitize);
-
-                    $data =  [
-                        ...$formDataSanitize,
-                        'password' => $passwordHash
-                    ];
+                    $emailSanitize = htmlentities($email);
 
                     $usersRepo = new UsersRepository();
-                    if ($usersRepo->create('users', $data)) {
-                        $_SESSION['isRegisted'] = true;
-                        header('Location:' . URL_HOMEPAGE);
+                    if ($usersRepo->findOne('User', 'email', $emailSanitize)) {
+                        $user = $usersRepo->findOne('User', 'email', $emailSanitize);
+                        $_SESSION['user_id'] = $user->getId(); //VERIFIER LE GET DE LA CLASSE
+                        $state = ['state' => true];
+                        $response = json_encode($state);
+                        header('Content-Type: application/json');
+                        echo ($response);
                     };
                 }
             }
         }
     }
 
-    public function login()
+    public function userConfirmPassword()
     {
-        if ($this->verifyCSRFToken($_POST['csrfLogin'], $_SESSION['csrfLogin'])) {
+        if ($this->verifyCSRFToken($_POST['csrfRegister'], $_SESSION['csrfRegister'])) {
             if ($this->issetFormData($_POST)) {
-                if ($this->notEmpty($_POST)) {
-                    $mail = $_POST['mailLogin'];
-                    $password = $_POST['passwordLogin'];
-                } else {
-                    $error = [];
-                    $error += $this->notEmpty($_POST);
-                };
-
-                if (!empty($error)) {
-                    $csrfLogin = $this->createCSRFToken('csrfLogin');
-                    $viewData = [
-                        'csrfLogin' => $csrfLogin,
-                        'error' => $error
-                    ];
-                    $this->render('home', $viewData);
-                } else {
-                    $mailSanitize = htmlentities($mail);
-                    $userRepo = new UsersRepository();
-                    $getUser = $userRepo->findOne('users', 'mail', $mailSanitize);
-                    if ($getUser === false) {
-                        $viewData = [
-                            'mailError' => 'this email does not exist'
-                        ];
-                        $this->render('login', $viewData);
-                    } else {
-                        $getPasswordUser = $getUser->getPassword();
-                        if (password_verify($password, $getPasswordUser)) {
-
-                            $getRole = $getUser->getRole();
-                            if ($getRole === 'user') {
-                                unset($_SESSION['adminIsConnected']);
-                                unset($_SESSION['superAdminIsConnected']);
-                                $_SESSION['userIsConnected'] = true;
-                                $_SESSION['uuidUser'] = $getUser->getUuid();
-                            }
-                            if ($getRole === 'admin') {
-                                unset($_SESSION['superAdminIsConnected']);
-                                unset($_SESSION['userIsConnected']);
-                                $_SESSION['adminIsConnected'] = true;
-                            }
-                            if ($getRole === 'super_admin') {
-                                unset($_SESSION['adminIsConnected']);
-                                unset($_SESSION['userIsConnected']);
-                                $_SESSION['superAdminIsConnected'] = true;
-                            }
-
-                            header('Location: ' . URL_HOMEPAGE);
-                        } else {
-                            $error = 'This password does not match';
-                            $csrfLogin = $this->createCSRFToken('csrfLogin');
-                            $viewData = [
-                                'wrongPassword' => $error,
-                                'csrfLogin' => $csrfLogin
-                            ];
-                            $this->render('login', $viewData);
-                        }
+                if ($this->notEmpty($_POST) === true) {
+                    if ($this->checkDoublePassword($_POST['password'], $_POST['confirmPassword']) !== false) {
+                        $password = $_POST['password'];
                     }
+                } else {
+                    $error['password'] = 'Your passwords are not identical';
                 }
+            } else {
+                $error = [];
+                $error += $this->notEmpty($_POST);
+            };
+
+            if (!empty($error)) {
+                $csrfRegister = $this->createCSRFToken('csrfRegister');
+                $viewData = [
+                    'csrfRegister' => $csrfRegister,
+                    'error' => $error,
+                    'etat' => false,
+                ];
+                $response = json_encode($viewData);
+                header('Content-Type: application/json');
+                echo ($response);
+            } else {
+                $passwordHashed = $this->passwordHash($password);
+
+                $usersRepo = new UsersRepository();
+                $setColumnsData = ["password" => $passwordHashed, "active" => 1];
+                $usersRepo->update('User', $setColumnsData, $_SESSION['user_id']);
+                $state = ['etat' => true];
+                $response = json_encode($state);
+                header('Content-Type: application/json');
+                echo ($response);
             }
         }
     }
 
+    public function userLogin()
+    {
+        if ($this->verifyCSRFToken($_POST['csrfRegister'], $_SESSION['csrfRegister'])) {
+            if ($this->issetFormData($_POST)) {
+                if ($this->notEmpty($_POST) === true) {
+                    $usersRepo = new UsersRepository();
+                    if ($usersRepo->findOne('User', 'email', $_SESSION['email'])) {
+                        $user = $usersRepo->findOne('User', 'uuid', $_SESSION['user_id']);
+                        if (password_verify($_POST['password'], $user->getPassword())) {
+                            $_SESSION['authenticated_user'] = $user->getRoleId();
+                            $state = ['state' => true];
+                            $response = json_encode($state);
+                            header('Content-Type: application/json');
+                            echo ($response);
+                        }
+                    }
+                } else {
+                    $error['noUser'] = 'User not found';
+                }
+            } else {
+                $error = [];
+                $error += $this->notEmpty($_POST);
+            };
+
+            if (!empty($error)) {
+                $csrfRegister = $this->createCSRFToken('csrfRegister');
+                $viewData = [
+                    'csrfRegister' => $csrfRegister,
+                    'error' => $error
+                ];
+                $response = json_encode($viewData);
+                header('Content-Type: application/json');
+                echo ($response);
+            }
+        }
+    }
 
     public function logout()
     {
-        session_start();
         session_destroy();
 
-        header('Location:' . URL_HOMEPAGE);
+        $state = ['state' => true];
+        $response = json_encode($state);
+        header('Content-Type: application/json');
+        echo ($response);
     }
 }

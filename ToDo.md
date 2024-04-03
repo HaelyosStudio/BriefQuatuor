@@ -15,7 +15,7 @@
 # David :
 
 ## TODO :
- - initDB
+ 
 
 ## WIP :
 
@@ -24,5 +24,6 @@
 ## TO BLOCK :
 
 ## VALID :
+- initDB
 
  <!--  -->
