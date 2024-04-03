@@ -95,3 +95,26 @@
         padding: 6px 12px 6px 12px;
     }
 }
+
+/********************************** Partie Infos Générales **********************************/
+
+.generalContent {
+
+    nav {
+
+        div button:first-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4px 8px 0px 0px;
+            width: 74px;
+            height: 33px;
+        }
+    }
+}
+
+/*********************************** Partie Retards ***********************************/
+
+
+
+/*********************************** Partie Absences ***********************************/
