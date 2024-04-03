@@ -5,23 +5,23 @@ namespace App\Services;
 trait Constraints
 {
     /**
-     * @param  string  $inputform
+     * @param  string  $inputValue
      * @param  integer $length
      * @return boolean
      */
-    public function maxLengthConstraint(string $inputform, int $length): bool
+    public function maxLengthConstraint(string $inputValue, int $length): bool
     {
-        return strlen($inputform) <= $length ?  true : false;
+        return strlen($inputValue) <= $length ?  true : false;
     }
 
     /**
-     * @param  string  $inputform
+     * @param  string  $inputValue
      * @param  integer $length
      * @return boolean
      */
-    public function minLengthConstraint(string $inputform, int $length): bool
+    public function minLengthConstraint(string $inputValue, int $length): bool
     {
-        return strlen($inputform) >= $length ?  true : false;
+        return strlen($inputValue) >= $length ?  true : false;
     }
 
     /**
@@ -35,12 +35,12 @@ trait Constraints
     }
 
     /**
-     * @param  array $inputValue
-     * @return bool|array
+     * @param  array<string, mixed> $formData
+     * @return boolean | array
      */
-    public function notEmpty(array $inputValue): bool | array
+    public function notEmpty(array $formData): bool | array
     {
-        foreach ($inputValue as $key => $value) {
+        foreach ($formData as $key => $value) {
             if (empty($value)) {
                 $replace = ['Register', 'Update'];
                 $input = str_replace($replace, '', $key);

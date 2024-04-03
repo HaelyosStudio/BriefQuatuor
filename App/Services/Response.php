@@ -5,8 +5,8 @@ namespace App\Services;
 trait Response
 {
     /**
-     * @param  string     $view
-     * @param  array<string,mixed> | null $viewData
+     * @param  string $view
+     * @param  array<string, mixed> | null $viewData
      * @return void
      */
     public function render(string $view, ?array $viewData = null): void

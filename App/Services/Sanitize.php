@@ -5,12 +5,12 @@ namespace App\Services;
 trait Sanitize
 {
     /**
-     * @param  array $formInput
-     * @return array
+     * @param  array<string, mixed> $formData
+     * @return array<string, mixed>
      */
-    public function sanitize(array $formInput): array
+    public function sanitize(array $formData): array
     {
-        foreach ($formInput as $key => $value) {
+        foreach ($formData as $key => $value) {
             $dataSanitize[$key] = htmlentities($value);
         }
         return $dataSanitize;

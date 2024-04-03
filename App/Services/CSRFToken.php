@@ -17,13 +17,13 @@ trait CSRFToken
     }
 
     /**
-     * @param  string  $csrfPost
+     * @param  string  $csrfInput
      * @param  string  $csrfSession
      * @return boolean
      */
-    public function verifyCSRFToken(string $csrfPost, string $csrfSession): bool
+    public function verifyCSRFToken(string $csrfInput, string $csrfSession): bool
     {
-        if (isset($csrfPost, $csrfSession) && !empty($csrfPost) && !empty($csrfSession) && $csrfPost === $csrfSession) {
+        if (isset($csrfInput, $csrfSession) && !empty($csrfInput) && !empty($csrfSession) && $csrfInput === $csrfSession) {
             return true;
         }
         return false;

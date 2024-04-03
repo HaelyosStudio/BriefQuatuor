@@ -50,12 +50,18 @@ trait SQLRequest
 
     /**
      * @param  string $table
+     * @param  boolean $uuid
      * @return array
      */
-    public function findAll(string $table): array
+    public function findAll(string $table, bool $uuid = false): array
     {
         $Table = ucfirst($table);
-        $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table";
+        if ($uuid === true) {
+            $columns = "$table.*, BIN_TO_UUID(uuid) AS uuid";
+        } else {
+            $columns = "*";
+        }
+        $sql = "SELECT $columns FROM $table";
         try {
             $stmt = $this->getDb()->prepare($sql);
             $stmt->execute();
@@ -77,11 +83,13 @@ trait SQLRequest
     {
         if ($where === 'uuid') {
             $data = "UUID_TO_BIN(:$where)";
+            $columns = "$table.*, BIN_TO_UUID(uuid) AS uuid";
         } else {
             $data = ":$where";
+            $columns = "*";
         }
         $Table = ucfirst($table);
-        $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = $data";
+        $sql = "SELECT $columns FROM $table WHERE $where = $data";
         $params = [
             $where => $paramsData
         ];

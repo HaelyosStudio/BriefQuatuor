@@ -6,13 +6,13 @@ trait IssetFormData
 {
 
     /**
-     * @param  array $post
+     * @param  array<string, mixed> $formData
      * @return boolean
      */
-    public function issetFormData(array $post): bool
+    public function issetFormData(array $formData): bool
     {
-        foreach ($post as $key => $value) {
-            if (!isset($post[$key])) {
+        foreach ($formData as $key => $value) {
+            if (!isset($formData[$key])) {
                 return false;
             }
         }
