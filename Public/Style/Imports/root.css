@@ -1,0 +1,32 @@
+:root {
+    --mainColor: #FAFAFA;
+    --greyMainColor: #F8F9FA;
+    --blackColor: #252525;
+    --disabledColor: #6C757D;
+    --bootstrapColor: #0D6EFD;
+    --confirmColor: #198754;
+    --dangerColor: #DC3545; 
+    --warningColor: #FFC107;
+    --font: "Roboto", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    h3  {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+}
