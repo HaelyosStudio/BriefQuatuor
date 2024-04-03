@@ -1,2 +1,1 @@
-"use strict";
-
+import { createForm1, createForm2, createForm3 } from './Imports/createSections.js';
