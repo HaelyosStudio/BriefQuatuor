@@ -4,6 +4,7 @@ namespace App\Router;
 
 
 use App\Controllers\AuthController;
+use App\Controllers\AuthController;
 
 require __DIR__ . '/../Config/configRouter.php';
 
@@ -16,6 +17,7 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
             case URL_HOMEPAGE:
+                $user = new AuthController();
                 $user = new AuthController();
                 if ($method === 'GET') {
                     $user->homePage();

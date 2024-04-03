@@ -7,8 +7,8 @@ namespace App\Models;
 final class Cours
 {
     // params
-    private string $id, $day, $period;
-    private int $id_promo;
+    private string $day, $period;
+    private int $id, $id_promo;
 
     // contructor
     public function __construct(array $data = null)
@@ -38,18 +38,18 @@ final class Cours
     // setters & getters
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param  string $id
+     * @param  int $id
      * @return self
      */
-    public function setId(string $id): self
+    public function setId(int $id): self
     {
         $this->id = $id;
 

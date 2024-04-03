@@ -36,39 +36,38 @@ final class AuthController
     }
 
     public function userEmail()
-{
-    $rawBody = file_get_contents("php://input");
+    {
+        $rawBody = file_get_contents("php://input");
 
-    $body = json_decode($rawBody, true);
+        $body = json_decode($rawBody, true);
 
-    if (isset($body['email'])) {
-        $email = $body['email'];
-        $userRepo = new UserRepository();
-        if ($userRepo->findOne('User', 'email', $email)) {
-            $user = $userRepo->findOne('User', 'email', $email);
-            $userActive = $user->getActive();
-            if($userActive) {
-                $response = ['email_exists' => true, 'active' => true, 'email' => $email];
-                header('Content-Type: application/json');
-                echo json_encode($response);
+        if (isset($body['email'])) {
+            $email = $body['email'];
+            $userRepo = new UserRepository();
+            if ($userRepo->findOne('User', 'email', $email)) {
+                $user = $userRepo->findOne('User', 'email', $email);
+                $userActive = $user->getActive();
+                if ($userActive) {
+                    $response = ['email_exists' => true, 'active' => true, 'email' => $email];
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                } else {
+                    $response = ['email_exists' => true, 'active' => false, 'email' => $email];
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                }
             } else {
-                $response = ['email_exists' => true, 'active' => false, 'email' => $email];
+                $response = ['email_exists' => false, 'email' => $email];
+
                 header('Content-Type: application/json');
                 echo json_encode($response);
             }
-            
         } else {
-            $response = ['email_exists' => false, 'email' => $email];
-            
+            $response = ['success' => false, 'message' => 'Clé "email" manquante dans la requête'];
             header('Content-Type: application/json');
             echo json_encode($response);
         }
-    } else {
-        $response = ['success' => false, 'message' => 'Clé "email" manquante dans la requête'];
-        header('Content-Type: application/json');
-        echo json_encode($response);
     }
-}
 
 
     public function userConfirmPassword()
