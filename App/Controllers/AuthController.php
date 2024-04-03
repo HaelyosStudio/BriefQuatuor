@@ -12,7 +12,7 @@ use App\Services\Sanitize;
 use App\Services\IssetFormData;
 use App\Services\Password;
 
-final class UserController
+final class AuthController
 {
     // params
 
@@ -50,17 +50,18 @@ final class UserController
             if($userActive) {
                 $response = ['email_exists' => true, 'active' => true, 'email' => $email];
                 header('Content-Type: application/json');
-                echo ($response);
+                echo json_encode($response);
             } else {
                 $response = ['email_exists' => true, 'active' => false, 'email' => $email];
                 header('Content-Type: application/json');
-                echo ($response);
+                echo json_encode($response);
             }
             
         } else {
             $response = ['email_exists' => false, 'email' => $email];
+            
             header('Content-Type: application/json');
-            echo ($response);
+            echo json_encode($response);
         }
     } else {
         $response = ['success' => false, 'message' => 'Clé "email" manquante dans la requête'];

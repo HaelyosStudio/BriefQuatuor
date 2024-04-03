@@ -3,7 +3,7 @@
 namespace App\Router;
 
 
-use App\Controllers\UserController;
+use App\Controllers\AuthController;
 
 require __DIR__ . '/../Config/configRouter.php';
 
@@ -16,25 +16,25 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
             case URL_HOMEPAGE:
-                $user = new UserController();
+                $user = new AuthController();
                 if ($method === 'GET') {
                     $user->homePage();
                 }
                 break;
             case URL_HOMEPAGE . 'checkmail':
-                $user = new UserController();
+                $user = new AuthController();
                 if ($method === 'POST') {
                     $user->userEmail();
                 }
                 break;
             case URL_HOMEPAGE . 'confirmPassword':
-                $user = new UserController();
+                $user = new AuthController();
                 if ($method === 'POST') {
                     $user->userConfirmPassword();
                 }
                 break;
             case URL_HOMEPAGE . 'login':
-                $user = new UserController();
+                $user = new AuthController();
                 if ($method === 'POST') {
                     $user->userLogin();
                 }
