@@ -1,4 +1,4 @@
-<div class="registrationForm1">
+<div class="registrationForm1 disabled">
     <div class="formHeader">
         <h1>Bienvenue</h1>
     </div>
@@ -10,6 +10,9 @@
         <button type="button" class="btn btn-primary">Connexion</button>
     </form>
 </div>
+
+<!-- Fin du form 1 -->
+
 <div class="registrationForm2 disabled">
     <div class="formHeader">
         <h1>Bienvenue</h1>
@@ -27,6 +30,9 @@
         <button type="button" class="btn btn-primary">Sauvegarder</button>
     </form>
 </div>
+
+<!-- Fin du form 2 -->
+
 <div class="registrationForm3 disabled">
     <div class="formHeader">
         <h1>Bienvenue</h1>
@@ -39,3 +45,5 @@
         <button type="button" class="btn btn-primary">Connexion</button>
     </form>
 </div>
+
+<!-- Fin du form 3 -->
