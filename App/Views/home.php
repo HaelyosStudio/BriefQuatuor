@@ -4,7 +4,7 @@ require_once __DIR__ . '/./Includes/header.php';
 <main>
     <?php include_once __DIR__ . '/./Includes/registrationForms.php' ?>
 
-    <section class="mainContent">
+    <section class="mainContent disabled">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Accueil</button>
