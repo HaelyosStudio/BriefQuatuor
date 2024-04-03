@@ -44,37 +44,38 @@ final class UserController
                 if ($this->notEmpty($_POST) === true) {
                     if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) !== false) {
                         $email = $_POST['email'];
+                    } else {
+                        $error['mailFormat'] = 'Your email is not in the correct format';
                     }
                 } else {
-                    $error['mailFormat'] = 'Your email is not in the correct format';
-                }
-            } else {
-                $error = [];
-                $error += $this->notEmpty($_POST);
-            };
+                    $error = [];
+                    $error += $this->notEmpty($_POST);
+                };
 
-            if (!empty($error)) {
-                $csrfRegister = $this->createCSRFToken('csrfRegister');
-                $viewData = [
-                    'csrfRegister' => $csrfRegister,
-                    'error' => $error,
-                    'etat' => false,
-                ];
-                $response = json_encode($viewData);
-                header('Content-Type: application/json');
-                echo ($response);
-            } else {
-                $emailSanitize = htmlentities($email);
-
-                $usersRepo = new UsersRepository();
-                if ($usersRepo->findOne('User', 'email', $emailSanitize)) {
-                    $user = $usersRepo->findOne('User', 'email', $emailSanitize);
-                    $_SESSION['user_id'] = $user->getId(); //VERIFIER LE GET DE LA CLASSE
-                    $etat = ['etat' => true];
-                    $response = json_encode($etat);
+                if (!empty($error)) {
+                    $csrfRegister = $this->createCSRFToken('csrfRegister');
+                    $viewData = [
+                        'csrfRegister' => $csrfRegister,
+                        'error' => $error,
+                        'etat' => false,
+                    ];
+                    http_response_code(400);
+                    $response = json_encode($viewData);
                     header('Content-Type: application/json');
                     echo ($response);
-                };
+                } else {
+                    $emailSanitize = htmlentities($email);
+
+                    $usersRepo = new UsersRepository();
+                    if ($usersRepo->findOne('User', 'email', $emailSanitize)) {
+                        $user = $usersRepo->findOne('User', 'email', $emailSanitize);
+                        $_SESSION['user_id'] = $user->getId(); //VERIFIER LE GET DE LA CLASSE
+                        $state = ['state' => true];
+                        $response = json_encode($state);
+                        header('Content-Type: application/json');
+                        echo ($response);
+                    };
+                }
             }
         }
     }
@@ -111,8 +112,8 @@ final class UserController
                 $usersRepo = new UsersRepository();
                 $setColumnsData = ["password" => $passwordHashed, "active" => 1];
                 $usersRepo->update('User', $setColumnsData, $_SESSION['user_id']);
-                $etat = ['etat' => true];
-                $response = json_encode($etat);
+                $state = ['etat' => true];
+                $response = json_encode($state);
                 header('Content-Type: application/json');
                 echo ($response);
             }
@@ -129,8 +130,8 @@ final class UserController
                         $user = $usersRepo->findOne('User', 'uuid', $_SESSION['user_id']);
                         if (password_verify($_POST['password'], $user->getPassword())) {
                             $_SESSION['authenticated_user'] = $user->getRoleId();
-                            $etat = ['etat' => true];
-                            $response = json_encode($etat);
+                            $state = ['state' => true];
+                            $response = json_encode($state);
                             header('Content-Type: application/json');
                             echo ($response);
                         }
@@ -156,11 +157,13 @@ final class UserController
         }
     }
 
-    // public function logout()
-    // {
-    //     session_start();
-    //     session_destroy();
+    public function logout()
+    {
+        session_destroy();
 
-    //     header('Location:' . URL_HOMEPAGE);
-    // }
+        $state = ['state' => true];
+        $response = json_encode($state);
+        header('Content-Type: application/json');
+        echo ($response);
+    }
 }
