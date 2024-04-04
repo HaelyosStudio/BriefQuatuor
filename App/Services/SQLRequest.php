@@ -185,7 +185,29 @@ trait SQLRequest
     //         $stmt->execute($params);
     //         $result = $stmt->fetchColumn();
     //         $stmt->closeCursor();
+    // /**
+    //  * @param  string $table
+    //  * @param  string $where
+    //  * @param  string $data
+    //  * @return string
+    //  */
+    // public function getUuid(string $table, string $where, string $data): string
+    // {
+    //     $sql = "SELECT BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = :$where";
+    //     $params = [
+    //         $where => $data
+    //     ];
+    //     try {
+    //         $stmt = $this->getDb()->prepare($sql);
+    //         $stmt->execute($params);
+    //         $result = $stmt->fetchColumn();
+    //         $stmt->closeCursor();
 
+    //         return $result;
+    //     } catch (PDOException $error) {
+    //         throw new Exception('Error: ' . $error->getMessage());
+    //     }
+    // }
     //         return $result;
     //     } catch (PDOException $error) {
     //         throw new Exception('Error: ' . $error->getMessage());
