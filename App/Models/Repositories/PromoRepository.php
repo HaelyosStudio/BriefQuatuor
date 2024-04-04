@@ -18,4 +18,20 @@ final class PromoRepository extends Database
 
     // CRUD
     use SQLRequest;
+
+    public function deleteCascade($promoId)
+    {
+        $query = 'DELETE FROM Cours
+                WHERE id_promo = :promoId;
+                DELETE FROM UserHasPromo
+                WHERE id_promo = :promoId;
+                DELETE FROM Promo
+                WHERE id = :promoId;';
+
+        $req = $this->getDb()->prepare($query);
+
+        $req->execute([
+            'promoId' => $promoId,
+        ]);
+    }
 }

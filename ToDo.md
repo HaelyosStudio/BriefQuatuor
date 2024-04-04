@@ -8,14 +8,13 @@
 
 ## TO BLOCK :
 
-## VALID :
+## VALID : Models & Repo
 
  <!--  -->
 
 # David :
 
 ## TODO :
- 
 
 ## WIP :
 
@@ -24,6 +23,7 @@
 ## TO BLOCK :
 
 ## VALID :
+
 - initDB
 
  <!--  -->

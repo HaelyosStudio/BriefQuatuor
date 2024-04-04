@@ -2,10 +2,7 @@
 
 namespace App\Controllers;
 
-
 use App\Models\Repositories\UserRepository;
-
-use App\Services\Response;
 use App\Services\Constraints;
 use App\Services\CSRFToken;
 use App\Services\Sanitize;
@@ -22,7 +19,6 @@ final class UserController
     }
 
     // traits
-    use Response;
     use Constraints;
     use CSRFToken;
     use Sanitize;

@@ -698,6 +698,7 @@ export function createPromoEditForm() {
 //////////////////////////////// Fin de la partie Promotions ////////////////////////////////
 
 export function createUserRow(lastName, firstName, email, activeAccount, role) {
+export function createUserRow(lastName, firstName, email, activeAccount, role) {
   const row = document.createElement("tr");
 
   const checkboxTh = document.createElement("th");
@@ -2133,5 +2134,7 @@ export function createTableRow(
 
   document.getElementById("main").append(row);
 }
+
+/////////////////////// Fin des lignes génériques du General Content ///////////////////////
 
 /////////////////////// Fin des lignes génériques du General Content ///////////////////////
