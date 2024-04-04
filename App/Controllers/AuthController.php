@@ -92,6 +92,7 @@ final class AuthController
             $email = $_SESSION['email'];
             $user = $userRepo->findOne('User', 'email', $email);
             $userId = $user->getUuid();
+            $userRole = $_SESSION['role'];
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
                 $columnsData = [
@@ -99,7 +100,7 @@ final class AuthController
                     "active" => 1
                 ];
                 if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
-                    $response = ['success' => true, 'message' => 'update success'];
+                    $response = ['success' => true, 'message' => 'update success', 'role' => $userRole];
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 } else {
