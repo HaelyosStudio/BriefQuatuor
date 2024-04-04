@@ -1,9 +1,9 @@
 INSERT INTO Role (name) VALUES
 ('Campus_manager'),
-('Responsable pedagogique'),
+('Responsable_pedagogique'),
 ('Apprenant'),
 ('Delegue'),
-('Delegue');
+('Formateur');
 
 INSERT INTO User (uuid, last_name, first_name, active, password, email, role_id) VALUES
 (UUID_TO_BIN(UUID(), 1), 'Dupont', 'Jean', 1, 'password123', 'jean.dupont@example.com', 1),

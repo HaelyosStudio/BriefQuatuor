@@ -35,6 +35,15 @@ final class AuthController
         $this->render('home');
     }
 
+    public function isLogged() {
+        if ($_SESSION['authenticate_user'] === false | $this->notEmpty($_SESSION['authenticate_user']) === false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     public function userEmail()
     {
         $rawBody = file_get_contents("php://input");
@@ -86,21 +95,21 @@ final class AuthController
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
                 $columnsData = ["password" => $hashedpassword];
                 if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
-                    $response = ['sucess' => true, 'message' => 'connexion sucess'];
+                    $response = ['success' => true, 'message' => 'update success'];
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 } else {
-                    $response = ['sucess' => false, 'message' => 'erreur when updating'];
+                    $response = ['success' => false, 'message' => 'erreur when updating'];
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 }
             } else {
-                $response = ['sucess' => false, 'message' => 'password not identical'];
+                $response = ['success' => false, 'message' => 'password not identical'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
             }
         } else {
-            $response = ['sucess' => false, 'message' => 'Clé(s) manquante(s) dans la requête'];
+            $response = ['success' => false, 'message' => 'Clé(s) manquante(s) dans la requête'];
             header('Content-Type: application/json');
             echo json_encode($response);
         }
@@ -119,17 +128,20 @@ final class AuthController
             $user = $userRepo->findOne('User', 'email', $email);
             $userPassword = $user->getPassword();
             if (password_verify($passwordInput, $userPassword)) {
-                $response = ['sucess' => true, 'message' => 'connexion sucess'];
+                $response = ['success' => true, 'message' => 'connexion success'];
                 $_SESSION['authenticate_user'] = true;
+                $userId = $user->getUuid();
+                $userRole = $userRepo->findRole($userId);
+                $_SESSION['role'] = $userRole;
                 header('Content-Type: application/json');
                 echo json_encode($response);
             } else {
-                $response = ['sucess' => false, 'message' => 'connexion error'];
+                $response = ['success' => false, 'message' => 'connexion error'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
             }
         } else {
-            $response = ['sucess' => false, 'message' => 'Clé(s) manquante(s) dans la requête'];
+            $response = ['success' => false, 'message' => 'Clé(s) manquante(s) dans la requête'];
             header('Content-Type: application/json');
             echo json_encode($response);
         }
