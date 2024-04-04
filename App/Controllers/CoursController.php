@@ -27,34 +27,42 @@ final class CoursController
 
     public function validatePresence()
     {
-        $rawBody = file_get_contents("php://input");
+        $acceptedRole = ['Formateur', 'Delegue', 'Apprenant'];
+        if (in_array($_SESSION['role'], $acceptedRole)) {
+            $rawBody = file_get_contents("php://input");
 
-        $data = json_decode($rawBody, true);
+            $data = json_decode($rawBody, true);
+            if ($this->issetFormData($data)) {
+                if ($this->notEmpty($data)) {
+                    $period = $data['period'];
+                    $userId = $data['userId'];
+                    $coursId = $data['coursId'];
+                    date_default_timezone_set('Europe/Paris');
+                    $currentTime = date('H:i');
 
-        if ($this->issetFormData($data)) {
-            if ($this->notEmpty($data)) {
-                $time = $data['time'];
-                $userId = $data['userId'];
-                $coursId = $data['coursId'];
-                date_default_timezone_set('Europe/Paris');
-                $currentTime = date('H:i');
+                    $dateTime = new DateTime($time);
+                    $currentDateTime = new DateTime($currentTime);
+                    $timeDiff = $currentDateTime->diff($dateTime);
+                    $minutesDiff = $timeDiff->format("%i");
 
-                $dateTime = new DateTime($time);
-                $currentDateTime = new DateTime($currentTime);
-                $timeDiff = $currentDateTime->diff($dateTime);
-                $minutesDiff = $timeDiff->format("%i");
-
-                if ($minutesDiff > 15) {
-
-                    $userHasCoursRepo = new UserhascoursRepository();
-                    $userHasCoursRepo->update('userhascours',);
-                    $response = [
-                        "success" => true,
-                        "message" => "Validation réussie",
-                    ];
-                    echo json_encode($response);
+                    if ($minutesDiff > 15) {
+                        $userHasCoursRepo = new UserhascoursRepository();
+                        $userHasCoursRepo->updateUserhascours();
+                        $response = [
+                            "success" => true,
+                            "message" => "Validation réussie",
+                        ];
+                        header('Content-Type: application/json');
+                        echo json_encode($response);
+                    }
                 }
             }
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            $response = ['success' => false, 'message' => 'wrong role'];
+            header('Content-Type: application/json');
+            echo json_encode($response);
         }
     }
 }

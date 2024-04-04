@@ -39,6 +39,7 @@ class Router
                     $user->userLogin();
                 }
                 break;
+
             case URL_HOMEPAGE . 'cours/validate_presence':
                 $cours = new CoursController();
                 if ($method === 'GET') {
