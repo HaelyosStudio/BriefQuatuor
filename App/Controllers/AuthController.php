@@ -35,7 +35,8 @@ final class AuthController
         $this->render('home');
     }
 
-    public function isLogged() {
+    public function isLogged()
+    {
         if ($_SESSION['authenticate_user'] === false | $this->notEmpty($_SESSION['authenticate_user']) === false) {
             return false;
         } else {
@@ -96,7 +97,7 @@ final class AuthController
                 $columnsData = [
                     "password" => $hashedpassword,
                     "active" => 1
-            ];
+                ];
                 if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
                     $response = ['success' => true, 'message' => 'update success'];
                     header('Content-Type: application/json');
