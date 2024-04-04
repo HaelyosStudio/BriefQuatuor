@@ -218,3 +218,75 @@ export function fetchConfirmPassword() {
       );
     });
 }
+
+export function fetchLogin() {
+  const passwordInput = document.getElementById("connectPassword");
+
+  const passwordValue = passwordInput.value;
+
+  const formData = {
+    connectPassword: passwordValue,
+  };
+
+  fetch(base_url + "login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          "A network error occurred: " +
+            response.status +
+            ". Please try again later."
+        );
+      }
+      return response.json();
+    })
+    .then((data) => {
+      
+      let toastMessage = "";
+      let toastBg = "";
+      if (data.success === false) {
+        // passwords not identical
+        toastMessage =
+          "Le mot de passe que vous avez saisi est incorrect. Veuillez réessayer.";
+        toastBg = "danger";
+
+        const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
+        const registrationForm3 = document.querySelector(".registrationForm3");
+
+        setTimeout((toastBootstrap) => {
+          registrationForm3.parentNode.removeChild(registrationForm3);
+          toastBootstrap.hide();
+          createForm3();
+        }, 3000, toastBootstrap);
+      } else if (data.success === true) {
+        // error when updating password
+        toastMessage =
+          "Mot de passe correct. Connexion en cours.";
+        toastBg = "success";
+
+        const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
+        const registrationForm3 = document.querySelector(".registrationForm3");
+
+        setTimeout((toastBootstrap) => {
+          registrationForm3.parentNode.removeChild(registrationForm3);
+          toastBootstrap.hide();
+          createMainContent();
+        }, 3000, toastBootstrap);
+      }
+
+      // clear password input fields
+      passwordInput.value = "";
+
+    })
+    .catch((error) => {
+      createBootstrapToast(
+        "An error occurred while making the request. Please check your network connection and try again.",
+        "danger"
+      );
+    });
+}
