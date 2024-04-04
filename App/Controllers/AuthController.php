@@ -11,6 +11,7 @@ use App\Services\CSRFToken;
 use App\Services\Sanitize;
 use App\Services\IssetFormData;
 use App\Services\Password;
+use App\Services\Cors;
 
 final class AuthController
 {
@@ -19,6 +20,7 @@ final class AuthController
     // constructor
     public function __construct()
     {
+        $this->handleCors();
     }
 
     // traits
@@ -28,6 +30,7 @@ final class AuthController
     use Sanitize;
     use IssetFormData;
     use Password;
+    use Cors;
 
 
     public function homePage()
@@ -94,7 +97,7 @@ final class AuthController
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
                 $columnsData = ["password" => $hashedpassword];
-                if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
+                if ($userRepo->updatePassword($hashedpassword, $userId)) {
                     $response = ['success' => true, 'message' => 'update success'];
                     header('Content-Type: application/json');
                     echo json_encode($response);

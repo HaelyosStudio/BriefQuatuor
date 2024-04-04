@@ -1,4 +1,4 @@
-import { fetchFormEmail } from "./fetch.js";
+import { fetchConfirmPassword, fetchFormEmail } from "./fetch.js";
 
 export function createForm1() {
   const formContainer = document.createElement("div");
@@ -111,6 +111,7 @@ export function createForm2() {
   submitButton.type = "button";
   submitButton.className = "btn btn-primary";
   submitButton.textContent = "Sauvegarder";
+  submitButton.addEventListener("click", fetchConfirmPassword);
 
   form.appendChild(passwordDiv);
   form.appendChild(confirmPasswordDiv);

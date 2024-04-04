@@ -29,6 +29,19 @@ final class UserRepository extends Database
         return $req->fetch();
     }
 
+    public function updatePassword($password, $uuid)
+    {
+        $query = 'UPDATE User set password = :password, active = 1 WHERE uuid = :uuid';
+
+        $req = $this->getDb()->prepare($query);
+
+        $req->execute([
+            'password' => $password,
+            'uuid' => $uuid,
+        ]);
+        return true;
+    }
+
     // CRUD
     use SQLRequest;
 }
