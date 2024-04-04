@@ -63,7 +63,7 @@ final class AuthController
                 echo json_encode($response);
             }
         } else {
-            $response = ['success' => false, 'message' => 'Clé "email" manquante dans la requête'];
+            $response = ['email_exists' => false, 'message' => 'Clé "email" manquante dans la requête'];
             header('Content-Type: application/json');
             echo json_encode($response);
         }
