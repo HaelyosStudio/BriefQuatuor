@@ -93,7 +93,10 @@ final class AuthController
             $userId = $user->getUuid();
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
-                $columnsData = ["password" => $hashedpassword];
+                $columnsData = [
+                    "password" => $hashedpassword,
+                    "active" => 1
+            ];
                 if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
                     $response = ['success' => true, 'message' => 'update success'];
                     header('Content-Type: application/json');
