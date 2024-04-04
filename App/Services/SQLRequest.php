@@ -75,19 +75,22 @@ trait SQLRequest
      * @param  string $table
      * @param  string $where
      * @param  string $paramsData
+     * @param  boolean $uuid
      * @return object | false
      */
-    public function findOne(string $table, string $where, string $paramsData): object | false
+    public function findOne(string $table, string $where, string $paramsData, bool $uuid = false): object | false
     {
-        if ($where === 'uuid') {
-            $data = "UUID_TO_BIN(:$where)";
-            $columns = "$table.*, BIN_TO_UUID(uuid) AS uuid";
-        } else {
-            $data = ":$where";
-            $columns = "*";
-        }
         $Table = ucfirst($table);
-        $sql = "SELECT $columns FROM $table WHERE $where = $data";
+        if ($uuid === true) {
+            if ($where === 'uuid') {
+                $data = "UUID_TO_BIN(:$where)";
+            } else {
+                $data = ":$where";
+            }
+            $sql = "SELECT $table.*, BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = $data";
+        } else {
+            $sql = "SELECT * FROM $table WHERE $where = :$where";
+        }
         $params = [
             $where => $paramsData
         ];
@@ -165,27 +168,27 @@ trait SQLRequest
         }
     }
 
-    /**
-     * @param  string $table
-     * @param  string $where
-     * @param  string $data
-     * @return string
-     */
-    public function getUuid(string $table, string $where, string $data): string
-    {
-        $sql = "SELECT BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = :$where";
-        $params = [
-            $where => $data
-        ];
-        try {
-            $stmt = $this->getDb()->prepare($sql);
-            $stmt->execute($params);
-            $result = $stmt->fetchColumn();
-            $stmt->closeCursor();
+    // /**
+    //  * @param  string $table
+    //  * @param  string $where
+    //  * @param  string $data
+    //  * @return string
+    //  */
+    // public function getUuid(string $table, string $where, string $data): string
+    // {
+    //     $sql = "SELECT BIN_TO_UUID(uuid) AS uuid FROM $table WHERE $where = :$where";
+    //     $params = [
+    //         $where => $data
+    //     ];
+    //     try {
+    //         $stmt = $this->getDb()->prepare($sql);
+    //         $stmt->execute($params);
+    //         $result = $stmt->fetchColumn();
+    //         $stmt->closeCursor();
 
-            return $result;
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
+    //         return $result;
+    //     } catch (PDOException $error) {
+    //         throw new Exception('Error: ' . $error->getMessage());
+    //     }
+    // }
 }
