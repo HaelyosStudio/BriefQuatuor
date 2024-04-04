@@ -2,8 +2,8 @@
 
 namespace App\Router;
 
-
 use App\Controllers\AuthController;
+use App\Controllers\CoursController;
 use App\Controllers\PromotionController;
 
 require __DIR__ . '/../Config/configRouter.php';
@@ -74,6 +74,13 @@ class Router
                 $user = new PromotionController();
                 if ($method === 'POST') {
                     $user->deletePromo();
+                }
+                break;
+
+            case URL_HOMEPAGE . 'cours/validate_presence':
+                $cours = new CoursController();
+                if ($method === 'GET') {
+                    $cours->validatePresence();
                 }
                 break;
 

@@ -43,7 +43,6 @@ abstract class Database
             return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
-            return false;
         }
     }
 
@@ -56,7 +55,6 @@ abstract class Database
             return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
-            return false;
         }
     }
 }
