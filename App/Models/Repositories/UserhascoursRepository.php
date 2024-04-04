@@ -27,7 +27,7 @@ final class UserhascoursRepository extends Database
      */
     public function updateUserhascours(array $data): bool
     {
-        $sql = "UPDATE userhascours SET presence = :presence, delay = :delay WHERE user_id = :user_id AND cours_id = :cours_id ";
+        $sql = "UPDATE userhascours SET presence = :presence, delay = :delay WHERE user_id = UUID_TO_BIN(:user_id) AND cours_id = :cours_id ";
         $params = [
             'presence' => $data['presence'],
             'delay' => $data['delay'],

@@ -2,8 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
 use App\Models\Repositories\UserhascoursRepository;
-
+use App\Models\Repositories\UserRepository;
 use App\Services\Constraints;
 use App\Services\CSRFToken;
 use App\Services\Sanitize;
@@ -31,23 +32,46 @@ final class CoursController
         if (in_array($_SESSION['role'], $acceptedRole)) {
             $rawBody = file_get_contents("php://input");
 
-            $data = json_decode($rawBody, true);
-            if ($this->issetFormData($data)) {
-                if ($this->notEmpty($data)) {
-                    $period = $data['period'];
-                    $userId = $data['userId'];
-                    $coursId = $data['coursId'];
-                    date_default_timezone_set('Europe/Paris');
-                    $currentTime = date('H:i');
+            $body = json_decode($rawBody, true);
+            if ($this->issetFormData($body)) {
+                if ($this->notEmpty($body)) {
+                    $period = $body['period'];
 
-                    $dateTime = new DateTime($time);
+                    if ($period === 'matin') {
+                        $time = date('09:00');
+                    } else if ($period === "après_midi") {
+                        $time = date('13:00');
+                    }
+                    $currentTime = date('H:i');
                     $currentDateTime = new DateTime($currentTime);
+                    $dateTime = new DateTime($time);
                     $timeDiff = $currentDateTime->diff($dateTime);
                     $minutesDiff = $timeDiff->format("%i");
+                    $coursId = $body['coursId'];
+                    $userRepo = new UserRepository();
+                    $user = $userRepo->findOne('user', 'email', $_SESSION['email']);
+                    $userUuid = $user->getUuid();
 
+                    $data = [
+                        'user_id' => $userUuid,
+                        'cours_id' => $coursId,
+                        'presence' => 1,
+                    ];
                     if ($minutesDiff > 15) {
+                        $data['delay'] = 1;
                         $userHasCoursRepo = new UserhascoursRepository();
-                        $userHasCoursRepo->updateUserhascours();
+                        if ($userHasCoursRepo->updateUserhascours($data)) {
+                        }
+                        $response = [
+                            "success" => true,
+                            "message" => "Validation réussie",
+                        ];
+                        header('Content-Type: application/json');
+                        echo json_encode($response);
+                    } else {
+                        $userHasCoursRepo = new UserhascoursRepository();
+                        if ($userHasCoursRepo->updateUserhascours($data)) {
+                        }
                         $response = [
                             "success" => true,
                             "message" => "Validation réussie",
