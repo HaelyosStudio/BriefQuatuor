@@ -2,8 +2,8 @@
 
 namespace App\Router;
 
-
 use App\Controllers\AuthController;
+use App\Controllers\CoursController;
 
 require __DIR__ . '/../Config/configRouter.php';
 
@@ -16,7 +16,6 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
             case URL_HOMEPAGE:
-                $user = new AuthController();
                 $user = new AuthController();
                 if ($method === 'GET') {
                     $user->homePage();
@@ -38,6 +37,12 @@ class Router
                 $user = new AuthController();
                 if ($method === 'POST') {
                     $user->userLogin();
+                }
+                break;
+            case URL_HOMEPAGE . 'cours/validate_presence':
+                $cours = new CoursController();
+                if ($method === 'GET') {
+                    $cours->validatePresence();
                 }
                 break;
 
