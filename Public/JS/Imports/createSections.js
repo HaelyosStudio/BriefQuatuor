@@ -272,6 +272,7 @@ export function createMainContent() {
 
   const addPromotionButton = document.createElement("button");
   addPromotionButton.classList.add("btn", "btn-success");
+  addPromotionButton.id = "validatePresenceButton";
   addPromotionButton.textContent = "Ajouter promotion";
 
   promotionsTitle.appendChild(promotionsLeftInfos);
