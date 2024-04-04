@@ -43,7 +43,6 @@ trait SQLRequest
             }
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
-            return false;
         }
     }
 
@@ -113,15 +112,15 @@ trait SQLRequest
      */
     public function update(string $table, array $setColumnsData, string $where, string $id): bool
     {
+        if ($where === 'uuid') {
+            $data = "UUID_TO_BIN(:$where)";
+            $params['uuid'] = $id;
+        } else {
+            $data = ":$where";
+            $params['id'] = $id;
+        }
         foreach ($setColumnsData as $key => $value) {
             $params[$key] = $value;
-            if ($where === 'uuid') {
-                $data = "UUID_TO_BIN(:$where)";
-                $params['uuid'] = $id;
-            } else {
-                $data = ":$where";
-                $params['id'] = $id;
-            }
             $columns[] = "$key = :$key";
         }
         $setColumns = implode(", ", $columns);
@@ -133,7 +132,6 @@ trait SQLRequest
             return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
-            return false;
         }
     }
 
@@ -164,7 +162,6 @@ trait SQLRequest
             return true;
         } catch (PDOException $error) {
             throw new Exception('Error: ' . $error->getMessage());
-            return false;
         }
     }
 
