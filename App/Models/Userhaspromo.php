@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-final class Userhaspromo
+final class UserHasPromo
 {
     // params
     private string $user_id;
