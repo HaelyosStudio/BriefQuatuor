@@ -19,7 +19,7 @@ final class Userhaspromo
     // function to hydrate
 
     /**
-     * @param  array<string,mixed> $data
+     * @param  array<string, mixed> $data
      * @return void
      */
     private function hydrate(array $data): void
