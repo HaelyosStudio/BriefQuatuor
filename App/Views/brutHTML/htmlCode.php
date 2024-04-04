@@ -287,3 +287,339 @@
             </div>
         </div>
     </section> -->
+
+<!-- <div class="promoTitleButton">
+        <h3>Création d'une promotion</h3>
+    </div>
+    <div>
+        <form class="promoCreationForm">
+            <div class="mb-3">
+                <label for="newPromoName" class="form-label">Nom de la promotion</label>
+                <input type="text" class="form-control" id="newPromoName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newPromoStartDate" class="form-label">Date de début</label>
+                <input type="date" class="form-control" id="newPromoStartDate" placeholder="JJ/MM/AAAA">
+            </div>
+            <div class="mb-3">
+                <label for="newPromoEndDate" class="form-label">Date de fin</label>
+                <input type="date" class="form-control" id="newPromoEndDate" placeholder="JJ/MM/AAAA">
+            </div>
+            <div class="mb-3">
+                <label for="newPromoPlaces" class="form-label">Place(s) disponible(s)</label>
+                <input type="number" class="form-control" id="newPromoPlaces" max="20" placeholder="...">
+            </div>
+            <div class="d-md-flex justify-content-md-end">
+                <button type="button" id="savePromoButton" class="btn btn-primary savePromoButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+
+<!-- <div class="promoTitleButton">
+        <div class="formHeader">
+            <h3>Édition de la promotion NOMDEPROMO</h3>
+            <p>les changements appliqués sont définitifs</p>
+        </div>
+    </div>
+    <div>
+        <form class="promoCreationForm">
+            <div class="mb-3">
+                <label for="PromoName" class="form-label">Nom de la promotion</label>
+                <input type="text" class="form-control" id="PromoName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="PromoStartDate" class="form-label">Date de début</label>
+                <input type="date" class="form-control" id="PromoStartDate" placeholder="JJ/MM/AAAA">
+            </div>
+            <div class="mb-3">
+                <label for="PromoEndDate" class="form-label">Date de fin</label>
+                <input type="date" class="form-control" id="PromoEndDate" placeholder="JJ/MM/AAAA">
+            </div>
+            <div class="mb-3">
+                <label for="PromoPlaces" class="form-label">Place(s) disponible(s)</label>
+                <input type="number" class="form-control" id="PromoPlaces" max="20" placeholder="...">
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="savePromoButton" class="btn btn-danger savePromoButton">Supprimer</button>
+                <button type="button" id="savePromoButton" class="btn btn-primary savePromoButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+
+<!-- <div class="userTitleButton">
+        <div class="formHeader">
+            <h3>Création d'un apprenant</h3>
+        </div>
+    </div>
+    <div>
+        <form class="learnerCreationForm">
+            <div class="mb-3">
+                <label for="newLearnerLastName" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="newLearnerLastName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newLearnerFirstName" class="form-label">Prénom</label>
+                <input type="text" class="form-control" id="newLearnerFirstName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newLearnerEmail" class="form-label">Adresse email</label>
+                <input type="email" class="form-control" id="newLearnerEmail" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newLearnerPassword" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="newLearnerPassword" placeholder="">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="activeAccountCheck">
+                <label class="form-check-label" for="activeAccountCheck">
+                    Compte activé
+                </label>
+            </div>
+
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteLearnerButton" class="btn btn-danger deleteLearnerButton">Supprimer</button>
+                <button type="button" id="saveLearnerButton" class="btn btn-primary saveLearnerButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+
+    <!-- <div class="userTitleButton">
+        <div class="formHeader">
+            <h3>Édition de l'apprenant NOMDEL'APPRENANT</h3>
+            <p>les changements appliqués sont définitifs</p>
+        </div>
+    </div>
+    <div>
+        <form class="learnerCreationForm">
+            <div class="mb-3">
+                <label for="LearnerLastName" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="LearnerLastName" placeholder="nom">
+            </div>
+            <div class="mb-3">
+                <label for="LearnerFirstName" class="form-label">Prénom</label>
+                <input type="text" class="form-control" id="LearnerFirstName" placeholder="prénom">
+            </div>
+            <div class="mb-3">
+                <label for="LearnerEmail" class="form-label">Adresse email</label>
+                <input type="email" class="form-control" id="LearnerEmail" placeholder="nom.prénom@email.com">
+            </div>
+            <div class="mb-3">
+                <label for="LearnerPassword" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="LearnerPassword" placeholder="*****">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="activeAccountCheck">
+                <label class="form-check-label" for="activeAccountCheck">
+                    Compte activé
+                </label>
+            </div>
+
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteLearnerButton" class="btn btn-danger deleteLearnerButton">Supprimer</button>
+                <button type="button" id="saveLearnerButton" class="btn btn-primary saveLearnerButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+
+    <!-- <div class="delayTitleButton">
+        <div class="formHeader">
+            <h3>Création d'un retard</h3>
+        </div>
+    </div>
+    <div>
+        <form class="delayCreationForm">
+            <div class="mb-3">
+                <label for="LearnerDelay" class="form-label">Apprenant concerné</label>
+                <select class="form-select" aria-label="LearnerDelay" id="LearnerDelay">
+                <option selected>Selectionner un apprenant</option>
+                <option value="1">Example</option>
+                <option value="2">Example</option>
+                <option value="3">Example</option>
+            </select>
+            </div>
+            <div class="mb-3">
+                <label for="delayDate" class="form-label">Date du retard</label>
+                <input type="date" class="form-control" id="delayDate" placeholder="JJ-MM-AAAA">
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteDelayButton" class="btn btn-danger deleteDelayButton">Supprimer</button>
+                <button type="button" id="saveDelayButton" class="btn btn-primary saveDelayButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+<!-- fin de la création du retard -->
+    <!-- <div class="delayTitleButton">
+        <div class="formHeader">
+            <h3>Édition du retard de NOMDEL'APPRENANT</h3>
+            <p>les changements appliqués sont définitifs</p>
+        </div>
+    </div>
+    <div>
+        <form class="delayCreationForm">
+            <div class="mb-3">
+                <label for="LearnerDelay" class="form-label">Apprenant concerné</label>
+                <select class="form-select" aria-label="LearnerDelay" id="LearnerDelay">
+                <option selected>Selectionner un apprenant</option>
+                <option value="1">Example</option>
+                <option value="2">Example</option>
+                <option value="3">Example</option>
+            </select>
+            </div>
+            <div class="mb-3">
+                <label for="delayDate" class="form-label">Date du retard</label>
+                <input type="date" class="form-control" id="delayDate" placeholder="JJ-MM-AAAA">
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteDelayButton" class="btn btn-danger deleteDelayButton">Supprimer</button>
+                <button type="button" id="saveDelayButton" class="btn btn-primary saveDelayButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+    <!-- fin de l'édition du retard -->
+
+    <!-- <div class="absenceTitleButton">
+        <div class="formHeader">
+            <h3>Création d'une absence</h3>
+        </div>
+    </div>
+    <div>
+        <form class="absenceCreationForm">
+            <div class="mb-3">
+                <label for="LearnerAbsence" class="form-label">Apprenant concerné</label>
+                <select class="form-select" aria-label="LearnerAbsence" id="LearnerAbsence">
+                <option selected>Selectionner un apprenant</option>
+                <option value="1">Example</option>
+                <option value="2">Example</option>
+                <option value="3">Example</option>
+            </select>
+            </div>
+            <div class="mb-3">
+                <label for="absenceDate" class="form-label">Date de l'absence</label>
+                <input type="date" class="form-control" id="absenceDate" placeholder="JJ-MM-AAAA">
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteAbsenceButton" class="btn btn-danger deleteAbsenceButton">Supprimer</button>
+                <button type="button" id="saveAbsenceButton" class="btn btn-primary saveAbsenceButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+<!-- fin de la création de l'absence -->
+<!-- <div class="absenceTitleButton">
+        <div class="formHeader">
+            <h3>Édition d'une absence de NOMDEL'APPRENANT</h3>
+            <p>les changements appliqués sont définitifs</p>
+        </div>
+    </div>
+    <div>
+        <form class="absenceCreationForm">
+            <div class="mb-3">
+                <label for="LearnerAbsence" class="form-label">Apprenant concerné</label>
+                <select class="form-select" aria-label="LearnerAbsence" id="LearnerAbsence">
+                <option selected>NOMDEL'APPRENANT</option>
+                <option value="1">Example</option>
+                <option value="2">Example</option>
+                <option value="3">Example</option>
+            </select>
+            </div>
+            <div class="mb-3">
+                <label for="absenceDate" class="form-label">Date de l'absence</label>
+                <input type="date" class="form-control" id="absenceDate" placeholder="JJ-MM-AAAA">
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteAbsenceButton" class="btn btn-danger deleteAbsenceButton">Supprimer</button>
+                <button type="button" id="saveAbsenceButton" class="btn btn-primary saveAbsenceButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+    <!-- fin de l'édition de l'absence -->
+
+    <!-- <div class="userTitleButton">
+        <div class="formHeader">
+            <h3>Création d'un utilisateur</h3>
+        </div>
+    </div>
+    <div>
+        <form class="userCreationForm">
+            <div class="mb-3">
+                <label for="newUserLastName" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="newUserLastName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newUserFirstName" class="form-label">Prénom</label>
+                <input type="text" class="form-control" id="newUserFirstName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newUserEmail" class="form-label">Adresse email</label>
+                <input type="email" class="form-control" id="newUserEmail" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="newUserRole" class="form-label">Rôle</label>
+                <select class="form-select" aria-label="newUserRole">
+                    <option selected>Selectionner un rôle</option>
+                    <option value="Formateur">Formateur-rice</option>
+                    <option value="Campus_manager">Campus Manager</option>
+                    <option value="Apprenant">Apprenant-e</option>
+                    <option value="Responsable_pedagogique">Responsable pédagogique</option>
+                    <option value="Delegue">Délégué-e</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-check-label" for="promoLink">Promotion(s)</label>
+                <select class="form-select" id="promoLink" data-placeholder="Selectionner la/les promotion(s) de l’utilisateur" multiple>
+                </select>
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="saveUserButton" class="btn btn-primary saveUserButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+<!-- Fin du form création utilisateur -->
+    <!-- <div class="userTitleButton">
+        <div class="formHeader">
+            <h3>Édition de l’utilisateur NOMDEL'APPRENANT</h3>
+            <p>les changements appliqués sont définitifs</p>
+        </div>
+    </div>
+    <div>
+        <form class="userEditForm">
+            <div class="mb-3">
+                <label for="userLastName" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="userLastName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="userFirstName" class="form-label">Prénom</label>
+                <input type="text" class="form-control" id="userFirstName" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="userEmail" class="form-label">Adresse email</label>
+                <input type="email" class="form-control" id="userEmail" placeholder="...">
+            </div>
+            <div class="mb-3">
+                <label for="userRole" class="form-label">Rôle</label>
+                <select class="form-select" aria-label="userRole">
+                    <option selected>Selectionner un rôle</option>
+                    <option value="Formateur">Formateur-rice</option>
+                    <option value="Campus_manager">Campus Manager</option>
+                    <option value="Apprenant">Apprenant-e</option>
+                    <option value="Responsable_pedagogique">Responsable pédagogique</option>
+                    <option value="Delegue">Délégué-e</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-check-label" for="promoLink">Promotion(s)</label>
+                <select class="form-select" id="promoLink" data-placeholder="Selectionner la/les promotion(s) de l’utilisateur" multiple>
+                </select>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="activeAccountCheck">
+                <label class="form-check-label" for="activeAccountCheck">
+                    Compte activé
+                </label>
+            </div>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <button type="button" id="deleteUserButton" class="btn btn-danger deleteUserButton">Supprimer</button>
+                <button type="button" id="saveUserButton" class="btn btn-primary saveUserButton">Sauvegarder</button>
+            </div>
+        </form>
+    </div> -->
+    <!-- Fin du form édition utilisateur -->

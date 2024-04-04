@@ -38,11 +38,79 @@ export function fetchFormEmail() {
         toastMessage =
           "Email introuvable. Veuillez vérifier votre adresse email et réessayer.";
         toastBg = "danger";
+
+                // Create the Bootstrap toast
+                const toast = document.createElement("div");
+                toast.className = `toast position-fixed top-0 end-0 m-3 p-3 align-items-center text-bg-${toastBg} border-0`;
+                toast.role = "alert";
+                toast.ariaLive = "assertive";
+                toast.ariaAtomic = "true";
+                toast.style.zIndex = 1100;
+                toast.innerHTML = `
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        ${toastMessage}
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  `;
+        
+                toastContainer.innerHTML = "";
+                toastContainer.appendChild(toast);
+        
+                const toastBootstrap = new bootstrap.Toast(toast);
+                toastBootstrap.show();
+        
+                setTimeout(() => {
+                  toastBootstrap.hide();
+                }, 2000);
+        
+                setTimeout(() => {
+                  const registrationForm1 =
+                    document.querySelector(".registrationForm1");
+                  registrationForm1.parentNode.removeChild(registrationForm1);
+        
+                  createForm1();
+                }, 2000);
       } else if (data.email_exists === true && data.active === false) {
         // email in database but not active
         toastMessage =
           "Votre compte n'est pas actif. Veuillez activer votre compte pour continuer.";
         toastBg = "warning";
+
+                // Create the Bootstrap toast
+                const toast = document.createElement("div");
+                toast.className = `toast position-fixed top-0 end-0 m-3 p-3 align-items-center text-bg-${toastBg} border-0`;
+                toast.role = "alert";
+                toast.ariaLive = "assertive";
+                toast.ariaAtomic = "true";
+                toast.style.zIndex = 1100;
+                toast.innerHTML = `
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        ${toastMessage}
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  `;
+        
+                toastContainer.innerHTML = "";
+                toastContainer.appendChild(toast);
+        
+                const toastBootstrap = new bootstrap.Toast(toast);
+                toastBootstrap.show();
+        
+                setTimeout(() => {
+                  toastBootstrap.hide();
+                }, 2000);
+        
+                setTimeout(() => {
+                  const registrationForm1 =
+                    document.querySelector(".registrationForm1");
+                  registrationForm1.parentNode.removeChild(registrationForm1);
+        
+                  createForm2();
+                }, 2000);
       } else if (data.email_exists === true && data.active === true) {
         // email in database and active
         toastMessage = "Le compte existe. Chargement en cours.";
@@ -54,7 +122,7 @@ export function fetchFormEmail() {
         toast.role = "alert";
         toast.ariaLive = "assertive";
         toast.ariaAtomic = "true";
-        toast.style.zIndex = 1100; // set the toast's z-index to display it above other elements
+        toast.style.zIndex = 1100;
         toast.innerHTML = `
             <div class="d-flex">
               <div class="toast-body">
@@ -64,39 +132,33 @@ export function fetchFormEmail() {
             </div>
           `;
 
-        // Insert the toast into the container
         toastContainer.innerHTML = "";
         toastContainer.appendChild(toast);
 
-        // Show the toast
         const toastBootstrap = new bootstrap.Toast(toast);
         toastBootstrap.show();
 
-        // Hide the toast after 2 seconds
         setTimeout(() => {
           toastBootstrap.hide();
         }, 2000);
 
-        // Wait for 2 seconds before deleting the registration form 1 and launching the createForm2 function
         setTimeout(() => {
           const registrationForm1 =
             document.querySelector(".registrationForm1");
           registrationForm1.parentNode.removeChild(registrationForm1);
 
-          // Launch the createForm2 function
-          createForm2();
+          createForm3();
         }, 2000);
       }
     })
     .catch((error) => {
-      // Create the Bootstrap toast
       const toast = document.createElement("div");
       toast.className =
         "toast position-fixed top-0 end-0 m-3 p-3 align-items-center text-bg-danger border-0";
       toast.role = "alert";
       toast.ariaLive = "assertive";
       toast.ariaAtomic = "true";
-      toast.style.zIndex = 1100; // set the toast's z-index to display it above other elements
+      toast.style.zIndex = 1100;
       toast.innerHTML = `
           <div class="d-flex">
             <div class="toast-body">
@@ -106,14 +168,11 @@ export function fetchFormEmail() {
           </div>
         `;
 
-      // Insert the toast into the container
       toastContainer.innerHTML = "";
 
-      // Show the toast
       const toastBootstrap = new bootstrap.Toast(toast);
       toastBootstrap.show();
 
-      // Hide the toast after 2 seconds
       setTimeout(() => {
         toastBootstrap.hide();
       }, 2000);
