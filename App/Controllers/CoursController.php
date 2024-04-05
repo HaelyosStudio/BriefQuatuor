@@ -31,12 +31,15 @@ final class CoursController
     {
         $acceptedRole = ['Formateur', 'Delegue', 'Apprenant'];
         if (in_array($_SESSION['role'], $acceptedRole)) {
-            date_default_timezone_set('Europe/Paris');
-            if (date('H:i') > '09:00' && date('H:i') < '12:30') {
-                $period = 'Matin';
-            } else if (date('H:i') > '13:30' && date('H:i') < '17:00') {
-                $period = 'Après-midi';
-            };
+            $timeZone = new DateTimeZone('Europe/Paris');
+            $currentTime = new DateTimeImmutable('now', $timeZone);
+            $currentTimeFormat = $currentTime->format('H:i');
+            if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
+                $period = "Matin";
+            }
+            if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
+                $period = "Après-midi";
+            }
 
             $userRepo = new UserRepository();
             $user = $userRepo->findOne('user', 'email', $_SESSION['email'], 1);

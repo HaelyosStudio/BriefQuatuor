@@ -20,7 +20,7 @@ import {
   createUserCreationForm,
 } from "./Imports/createSections.js";
 
-window.onload = createForm1();
+window.onload = createFormEmail();
 
 $(document).ready(function () {
   $("#promoLink").select2({
