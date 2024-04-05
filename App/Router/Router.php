@@ -91,13 +91,7 @@ class Router
                     $cours->validatePresence();
                 }
                 break;
-            case URL_HOMEPAGE . 'cours/getSignatures':
-                $cours = new CoursController();
-                if ($method === 'POST') {
-                    $cours->getSignaturesByCoursOnCurrentDay();
-                }
-                break;
-            case URL_HOMEPAGE . 'administrations/getPresences':
+            case URL_HOMEPAGE . 'administrations/summaryPresences':
                 $cours = new CoursController();
                 if ($method === 'POST') {
                     $cours->getSummaryCurrentDay();

@@ -34,9 +34,10 @@ final class CoursController
             $timeZone = new DateTimeZone('Europe/Paris');
             $currentTime = new DateTimeImmutable('now', $timeZone);
             $currentTimeFormat = $currentTime->format('H:i');
-            if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
-                $period = "Matin";
-            }
+            if ($currentTimeFormat < '09:00' && $currentTimeFormat)
+                if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
+                    $period = "Matin";
+                }
             if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
                 $period = "Après-midi";
             }
@@ -174,54 +175,20 @@ final class CoursController
         };
     }
 
-    public function getSignaturesByCoursOnCurrentDay()
-    {
-        $acceptedRole = ['Formateur', 'Delegue', 'Apprenant'];
-        if (in_array($_SESSION['role'], $acceptedRole)) {
-            $rawBody = file_get_contents("php://input");
-            $body = json_decode($rawBody, true);
-
-            $coursId = htmlentities($body['cours_id']);
-            $UHCRepository = new UserHasCoursRepository();
-            $getPresence = $UHCRepository->getSignCurrentDayByCours($coursId);
-            if (is_null($getPresence) === false) {
-                $response = [
-                    'success' => true,
-                    'message' => "Votre role ne vous permet pas d'intéragir avec cette page.",
-                    'presence' => $getPresence
-                ];
-                header('Content-Type: application/json');
-                echo json_encode($response);
-            } else {
-                $response = [
-                    'success' => false,
-                    'message' => "Problème avec la base de donnée."
-                ];
-                header('Content-Type: application/json');
-                echo json_encode($response);
-            };
-        } else {
-            $response = [
-                'success' => false,
-                'message' => "Votre role ne vous permet pas d'intéragir avec cette page."
-            ];
-            header('Content-Type: application/json');
-            echo json_encode($response);
-        };
-    }
 
     public function getSummaryCurrentDay()
     {
         $acceptedRole = ['Campus_manager', 'Responsable_pedagogique'];
         if (in_array($_SESSION['role'], $acceptedRole)) {
-            $rawBody = file_get_contents("php://input");
-            $body = json_decode($rawBody, true);
-            $coursId = htmlentities($body['cours_id']);
-            if (date('H:i') > '09:00' && date('H:i') < '12:30') {
-                $period = 'Matin';
-            } else if (date('H:i') > '13:30' && date('H:i') < '17:00') {
-                $period = 'Après-midi';
-            };
+            $timeZone = new DateTimeZone('Europe/Paris');
+            $currentTime = new DateTimeImmutable('now', $timeZone);
+            $currentTimeFormat = $currentTime->format('H:i');
+            if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
+                $period = "Matin";
+            }
+            if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
+                $period = "Après-midi";
+            }
             $UHCRepository = new UserHasCoursRepository();
             $getPresence = $UHCRepository->getSignCurrentDayByCours($coursId);
             $getAbsence = $UHCRepository->getNotSignCurrentDay($coursId);
