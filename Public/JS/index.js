@@ -21,7 +21,6 @@ import {
 } from "./Imports/createSections.js";
 
 window.onload = createFormEmail();
-window.onload = createFormEmail();
 
 $(document).ready(function () {
   $("#promoLink").select2({
