@@ -11,6 +11,7 @@ use App\Services\CSRFToken;
 use App\Services\Sanitize;
 use App\Services\IssetFormData;
 use App\Services\Password;
+use App\Services\Cors;
 
 final class AuthController
 {
@@ -99,7 +100,7 @@ final class AuthController
                     "password" => $hashedpassword,
                     "active" => 1
                 ];
-                if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
+                if ($userRepo->updatePassword($hashedpassword, $userId)) {
                     $response = ['success' => true, 'message' => 'update success', 'role' => $userRole];
                     header('Content-Type: application/json');
                     echo json_encode($response);
@@ -133,11 +134,12 @@ final class AuthController
             $user = $userRepo->findOne('User', 'email', $email);
             $userPassword = $user->getPassword();
             if (password_verify($passwordInput, $userPassword)) {
-                $response = ['success' => true, 'message' => 'connexion success'];
                 $_SESSION['authenticate_user'] = true;
                 $userId = $user->getUuid();
                 $userRole = $userRepo->findRole($userId);
+                //$userRole = 'Apprenant';
                 $_SESSION['role'] = $userRole;
+                $response = ['success' => true, 'role' => $userRole, 'message' => 'connexion success'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
             } else {

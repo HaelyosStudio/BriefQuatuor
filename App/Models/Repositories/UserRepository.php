@@ -18,7 +18,7 @@ final class UserRepository extends Database
 
     public function findRole($userId)
     {
-        $req = $this->getDb()->prepare('SELECT User.uuid, Role.name FROM User
+        $req = $this->getDb()->prepare('SELECT Role.name FROM User
         JOIN Role On User.role_id = Role.id
         WHERE User.uuid = :userId');
 
@@ -27,6 +27,19 @@ final class UserRepository extends Database
         ]);
 
         return $req->fetch();
+    }
+
+    public function updatePassword($password, $uuid)
+    {
+        $query = 'UPDATE User set password = :password, active = 1 WHERE uuid = :uuid';
+
+        $req = $this->getDb()->prepare($query);
+
+        $req->execute([
+            'password' => $password,
+            'uuid' => $uuid,
+        ]);
+        return true;
     }
 
     // CRUD
