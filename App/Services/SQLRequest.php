@@ -167,5 +167,4 @@ trait SQLRequest
             throw new Exception('Error: ' . $error->getMessage());
         }
     }
-
 }

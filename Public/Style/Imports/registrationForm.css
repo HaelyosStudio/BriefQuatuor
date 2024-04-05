@@ -1,6 +1,6 @@
 @import url(./root.css);
 
-.registrationForm1 {
+.registrationFormEmail {
     margin: 182px auto;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@
     }
 }
 
-.registrationForm2 {
+.registrationFormPassword {
     margin: 100px auto;
     display: flex;
     flex-direction: column;
@@ -72,7 +72,7 @@
     }
 }
 
-.registrationForm3 {
+.registrationFormLogin {
     margin: 182px auto;
     display: flex;
     flex-direction: column;

@@ -57,7 +57,20 @@ final class PromotionController
         if (in_array($_SESSION['role'], $acceptedRole)) {
             $promoRepo = new PromoRepository();
             $allPromo = $promoRepo->findAll('Promo', false);
-            $response = ['success' => true, 'allPromo' => $allPromo];
+            $promoId = $allPromo['id'];
+            $promoName = $allPromo['name'];
+            $promoDateStart = $allPromo['date_start'];
+            $promoDateFin = $allPromo['date_fin'];
+            $promoPlaces = $allPromo['places'];      
+
+            $response = [
+                'success' => true,
+                'promoId' => $promoId,
+                'promoName' => $promoName,
+                'promoDateStart' => $promoDateStart,
+                'promoDateFin' => $promoDateFin,
+                'promoPlaces' => $promoPlaces,
+                ];
             header('Content-Type: application/json');
             echo json_encode($response);
         } else {

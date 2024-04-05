@@ -17,6 +17,7 @@
         align-items: flex-start;
         padding: 25px 45px 25px 45px;
         gap: 30px;
+        margin-bottom: 40px;
 
         .courseInfos {
             display: flex;

@@ -94,12 +94,10 @@ final class AuthController
             $userId = $user->getUuid();
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
-                $columnsData = [
-                    "password" => $hashedpassword,
-                    "active" => 1
-                ];
-                if ($userRepo->update('User', $columnsData, 'uuid', $userId)) {
-                    $response = ['success' => true, 'message' => 'update success'];
+                if ($userRepo->updatePassword($hashedpassword, $userId)) {
+                    $userRole = $userRepo->findRole($userId);
+                    $_SESSION['role'] = $userRole['role'];
+                    $response = ['success' => true, 'message' => 'update success', 'role' => $userRole['role']];
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 } else {
@@ -132,11 +130,14 @@ final class AuthController
             $user = $userRepo->findOne('User', 'email', $email);
             $userPassword = $user->getPassword();
             if (password_verify($passwordInput, $userPassword)) {
-                $response = ['success' => true, 'message' => 'connexion success'];
                 $_SESSION['authenticate_user'] = true;
                 $userId = $user->getUuid();
                 $userRole = $userRepo->findRole($userId);
-                $_SESSION['role'] = $userRole;
+                $_SESSION['role'] = $userRole['role'];
+                $response = ['success' => true, 'role' => $userRole['role'], 'message' => 'connexion success'];
+                //$userRole = 'Apprenant';
+                $_SESSION['role'] = $userRole['role'];
+                $response = ['success' => true, 'role' => $userRole['role'], 'message' => 'connexion success'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
             } else {
