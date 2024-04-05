@@ -1,4 +1,5 @@
 import { fetchConfirmPassword, fetchFormEmail, fetchLogin } from "./fetch.js";
+import { newPromo } from "./buttonScripts.js";
 
 export function createFormEmail() {
   const formContainer = document.createElement("div");
@@ -271,6 +272,7 @@ export function createMainContent() {
   addPromotionButton.classList.add("btn", "btn-success");
   addPromotionButton.id = "validatePresenceButton";
   addPromotionButton.textContent = "Ajouter promotion";
+  addPromotionButton.addEventListener('click', newPromo);
 
   promotionsTitle.appendChild(promotionsLeftInfos);
   promotionsTitle.appendChild(addPromotionButton);

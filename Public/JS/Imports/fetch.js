@@ -1,14 +1,4 @@
-import {
-  createFormEmail,
-  createFormPassword,
-  createFormLogin,
-  createMainContent,
-  createCourseInfo,
-  createPromotionRow,
-  createUserRow,
-  createGeneralContent,
-  createTableRow,
-} from "./createSections.js";
+import { createFormEmail, createFormPassword, createFormLogin, createMainContent, createCourseInfo, createPromotionRow, createUserRow, createGeneralContent, createTableRow, createPromoEditForm, createPromoForm, createLearnerCreationForm, createLearnerEditForm, createDelayCreationForm, createDelayEditForm, createAbsenceCreationForm, createAbsenceEditForm, createUserEditForm, createUserCreationForm } from './createSections.js';
 const base_url = "http://briefquatuor/";
 
 function createBootstrapToast(toastMessage, toastBg) {
