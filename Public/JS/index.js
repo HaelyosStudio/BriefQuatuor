@@ -19,27 +19,6 @@ import {
   createUserEditForm,
   createUserCreationForm,
 } from "./Imports/createSections.js";
-import {
-  createFormEmail,
-  createFormPassword,
-  createFormLogin,
-  createMainContent,
-  createCourseInfo,
-  createPromotionRow,
-  createUserRow,
-  createGeneralContent,
-  createTableRow,
-  createPromoEditForm,
-  createPromoForm,
-  createLearnerCreationForm,
-  createLearnerEditForm,
-  createDelayCreationForm,
-  createDelayEditForm,
-  createAbsenceCreationForm,
-  createAbsenceEditForm,
-  createUserEditForm,
-  createUserCreationForm,
-} from "./Imports/createSections.js";
 import { LogInOutButton } from "./Imports/buttonScripts.js";
 
 window.onload = createFormEmail();
