@@ -1,8 +1,8 @@
 import { fetchConfirmPassword, fetchFormEmail, fetchLogin } from "./fetch.js";
 
-export function createForm1() {
+export function createFormEmail() {
   const formContainer = document.createElement("div");
-  formContainer.className = "registrationForm1";
+  formContainer.className = "registrationFormEmail";
 
   const main = document.getElementById("main");
   const alertContainer = document.createElement("div");
@@ -53,9 +53,9 @@ export function createForm1() {
 
 //////////////////////////////////// Fin du Form 1 ////////////////////////////////////
 
-export function createForm2() {
+export function createFormPassword() {
   const formContainer = document.createElement("div");
-  formContainer.className = "registrationForm2";
+  formContainer.className = "registrationFormPassword";
 
   const formHeader = document.createElement("div");
   formHeader.className = "formHeader";
@@ -124,9 +124,9 @@ export function createForm2() {
 
 //////////////////////////////////// Fin du Form 2 ////////////////////////////////////
 
-export function createForm3() {
+export function createFormLogin() {
   const formContainer = document.createElement("div");
-  formContainer.className = "registrationForm3";
+  formContainer.className = "registrationFormLogin";
 
   const formHeader = document.createElement("div");
   formHeader.className = "formHeader";
@@ -240,15 +240,10 @@ export function createMainContent() {
   homeTabContent.setAttribute("aria-labelledby", "nav-home-tab");
   homeTabContent.setAttribute("tabindex", "0");
 
-  const courseContainer = document.createElement("div");
-  courseContainer.classList.add("courseContainer");
-
   const h3 = document.createElement("h3");
   h3.textContent = "Cours du jour";
 
-  courseContainer.appendChild(h3);
-
-  homeTabContent.appendChild(courseContainer);
+  homeTabContent.append(h3);
 
   const promotionsTabContent = document.createElement("div");
   promotionsTabContent.classList.add("tab-pane", "fade");
@@ -441,6 +436,11 @@ export function createMainContent() {
 //////////////////////////////////// Fin du main content ////////////////////////////////////
 
 export function createCourseInfo(name, participants, date) {
+  const courseContainer = document.createElement("div");
+  courseContainer.classList.add("courseContainer");
+
+  document.querySelector(".mainContainer").appendChild(courseContainer);
+
   const courseInfos = document.createElement("div");
   courseInfos.classList.add("courseInfos");
 
@@ -463,12 +463,8 @@ export function createCourseInfo(name, participants, date) {
   courseInfos.appendChild(leftInfos);
   courseInfos.appendChild(boldP);
 
-  document.getElementById("main").appendChild(courseInfos);
-}
+  courseContainer.appendChild(courseInfos);
 
-///////////////////////////////// Fin des infos de Cours /////////////////////////////////
-
-export function createPresenceButton() {
   const presenceButton = document.createElement("div");
   presenceButton.classList.add("presenceButton");
 
@@ -478,10 +474,10 @@ export function createPresenceButton() {
 
   presenceButton.appendChild(button);
 
-  document.getElementById("main").appendChild(presenceButton);
+  courseContainer.appendChild(presenceButton);
 }
 
-//////////////////////////////// Fin du bouton de présence ////////////////////////////////
+///////////////////////////////// Fin des infos de Cours /////////////////////////////////
 
 export function createPromotionRow(name, startDate, endDate, places) {
   const row = document.createElement("tr");
@@ -1015,340 +1011,342 @@ export function createLearnerEditForm() {
 }
 
 export function createUserCreationForm() {
-    const userTitleButton = document.createElement('div');
-    userTitleButton.className = 'userTitleButton';
-  
-    const formHeader = document.createElement('div');
-    formHeader.className = 'formHeader';
-  
-    const title = document.createElement('h3');
-    title.textContent = 'Création d\'un utilisateur';
-  
-    formHeader.appendChild(title);
-    userTitleButton.appendChild(formHeader);
-  
-    const formContainer = document.createElement('div');
-  
-    const userCreationForm = document.createElement('form');
-    userCreationForm.className = 'userCreationForm';
-  
-    const lastNameDiv = document.createElement('div');
-    lastNameDiv.className = 'mb-3';
-  
-    const lastNameLabel = document.createElement('label');
-    lastNameLabel.htmlFor = 'newUserLastName';
-    lastNameLabel.className = 'form-label';
-    lastNameLabel.textContent = 'Nom';
-  
-    const lastNameInput = document.createElement('input');
-    lastNameInput.type = 'text';
-    lastNameInput.className = 'form-control';
-    lastNameInput.id = 'newUserLastName';
-    lastNameInput.placeholder = '...';
-  
-    lastNameDiv.appendChild(lastNameLabel);
-    lastNameDiv.appendChild(lastNameInput);
-    userCreationForm.appendChild(lastNameDiv);
-  
-    const firstNameDiv = document.createElement('div');
-    firstNameDiv.className = 'mb-3';
-  
-    const firstNameLabel = document.createElement('label');
-    firstNameLabel.htmlFor = 'newUserFirstName';
-    firstNameLabel.className = 'form-label';
-    firstNameLabel.textContent = 'Prénom';
-  
-    const firstNameInput = document.createElement('input');
-    firstNameInput.type = 'text';
-    firstNameInput.className = 'form-control';
-    firstNameInput.id = 'newUserFirstName';
-    firstNameInput.placeholder = '...';
-  
-    firstNameDiv.appendChild(firstNameLabel);
-    firstNameDiv.appendChild(firstNameInput);
-    userCreationForm.appendChild(firstNameDiv);
-  
-    const emailDiv = document.createElement('div');
-    emailDiv.className = 'mb-3';
-  
-    const emailLabel = document.createElement('label');
-    emailLabel.htmlFor = 'newUserEmail';
-    emailLabel.className = 'form-label';
-    emailLabel.textContent = 'Adresse email';
-  
-    const emailInput = document.createElement('input');
-    emailInput.type = 'email';
-    emailInput.className = 'form-control';
-    emailInput.id = 'newUserEmail';
-    emailInput.placeholder = '...';
-  
-    emailDiv.appendChild(emailLabel);
-    emailDiv.appendChild(emailInput);
-    userCreationForm.appendChild(emailDiv);
-  
-    const roleDiv = document.createElement('div');
-    roleDiv.className = 'mb-3';
-  
-    const roleLabel = document.createElement('label');
-    roleLabel.htmlFor = 'newUserRole';
-    roleLabel.className = 'form-label';
-    roleLabel.textContent = 'Rôle';
-  
-    const roleSelect = document.createElement('select');
-    roleSelect.className = 'form-select';
-    roleSelect.ariaLabel = 'newUserRole';
-  
-    const defaultRoleOption = document.createElement('option');
-    defaultRoleOption.selected = true;
-    defaultRoleOption.textContent = 'Selectionner un rôle';
-  
-    const formateurOption = document.createElement('option');
-    formateurOption.value = 'Formateur';
-    formateurOption.textContent = 'Formateur-rice';
-  
-    const campusManagerOption = document.createElement('option');
-    campusManagerOption.value = 'Campus_manager';
-    campusManagerOption.textContent = 'Campus Manager';
-  
-    const apprenantOption = document.createElement('option');
-    apprenantOption.value = 'Apprenant';
-    apprenantOption.textContent = 'Apprenant-e';
-  
-    const responsablePedagogiqueOption = document.createElement('option');
-    responsablePedagogiqueOption.value = 'Responsable_pedagogique';
-    responsablePedagogiqueOption.textContent = 'Responsable pédagogique';
-  
-    const delegeOption = document.createElement('option');
-    delegeOption.value = 'Delegue';
-    delegeOption.textContent = 'Délégué-e';
-  
-    roleSelect.appendChild(defaultRoleOption);
-    roleSelect.appendChild(formateurOption);
-    roleSelect.appendChild(campusManagerOption);
-    roleSelect.appendChild(apprenantOption);
-    roleSelect.appendChild(responsablePedagogiqueOption);
-    roleSelect.appendChild(delegeOption);
-  
-    roleDiv.appendChild(roleLabel);
-    roleDiv.appendChild(roleSelect);
-    userCreationForm.appendChild(roleDiv);
-  
-    const promoLinkDiv = document.createElement('div');
-    promoLinkDiv.className = 'mb-3';
-  
-    const promoLinkLabel = document.createElement('label');
-    promoLinkLabel.htmlFor = 'promoLink';
-    promoLinkLabel.className = 'form-check-label';
-    promoLinkLabel.textContent = "Promotion(s)";
-  
-    const promoLinkSelect = document.createElement('select');
-    promoLinkSelect.className = 'form-select';
-    promoLinkSelect.id = 'promoLink';
-    promoLinkSelect.multiple = true;
-    promoLinkSelect.dataset.placeholder = "Selectionner la/les promotion(s) de l’utilisateur";
-  
-    promoLinkDiv.appendChild(promoLinkLabel);
-    promoLinkDiv.appendChild(promoLinkSelect);
-    userCreationForm.appendChild(promoLinkDiv);
-  
-    const saveButtonDiv = document.createElement('div');
-    saveButtonDiv.className = 'd-grid gap-4 d-md-flex justify-content-md-end';
-  
-    const saveButton = document.createElement('button');
-    saveButton.type = 'button';
-    saveButton.id = 'saveUserButton';
-    saveButton.className = 'btn btn-primary saveUserButton';
-    saveButton.textContent = 'Sauvegarder';
-  
-    saveButtonDiv.appendChild(saveButton);
-    userCreationForm.appendChild(saveButtonDiv);
-  
-    formContainer.appendChild(userCreationForm);
-  
-    document.getElementById("main").append(userTitleButton, formContainer);
-  }
-  
- export function createUserEditForm(userName) {
-    const userTitleButton = document.createElement('div');
-    userTitleButton.className = 'userTitleButton';
-  
-    const formHeader = document.createElement('div');
-    formHeader.className = 'formHeader';
-  
-    const title = document.createElement('h3');
-    title.textContent = `Édition de l’utilisateur ${userName}`;
-  
-    const description = document.createElement('p');
-    description.textContent = 'les changements appliqués sont définitifs';
-  
-    formHeader.appendChild(title);
-    formHeader.appendChild(description);
-    userTitleButton.appendChild(formHeader);
-  
-    const formContainer = document.createElement('div');
-  
-    const userEditForm = document.createElement('form');
-    userEditForm.className = 'userEditForm';
-  
-    const lastNameDiv = document.createElement('div');
-    lastNameDiv.className = 'mb-3';
-  
-    const lastNameLabel = document.createElement('label');
-    lastNameLabel.htmlFor = 'userLastName';
-    lastNameLabel.className = 'form-label';
-    lastNameLabel.textContent = 'Nom';
-  
-    const lastNameInput = document.createElement('input');
-    lastNameInput.type = 'text';
-    lastNameInput.className = 'form-control';
-    lastNameInput.id = 'userLastName';
-    lastNameInput.placeholder = '...';
-  
-    lastNameDiv.appendChild(lastNameLabel);
-    lastNameDiv.appendChild(lastNameInput);
-    userEditForm.appendChild(lastNameDiv);
-  
-    const firstNameDiv = document.createElement('div');
-    firstNameDiv.className = 'mb-3';
-  
-    const firstNameLabel = document.createElement('label');
-    firstNameLabel.htmlFor = 'userFirstName';
-    firstNameLabel.className = 'form-label';
-    firstNameLabel.textContent = 'Prénom';
-  
-    const firstNameInput = document.createElement('input');
-    firstNameInput.type = 'text';
-    firstNameInput.className = 'form-control';
-    firstNameInput.id = 'userFirstName';
-    firstNameInput.placeholder = '...';
-  
-    firstNameDiv.appendChild(firstNameLabel);
-    firstNameDiv.appendChild(firstNameInput);
-    userEditForm.appendChild(firstNameDiv);
-  
-    const emailDiv = document.createElement('div');
-    emailDiv.className = 'mb-3';
-  
-    const emailLabel = document.createElement('label');
-    emailLabel.htmlFor = 'userEmail';
-    emailLabel.className = 'form-label';
-    emailLabel.textContent = 'Adresse email';
-  
-    const emailInput = document.createElement('input');
-    emailInput.type = 'email';
-    emailInput.className = 'form-control';
-    emailInput.id = 'userEmail';
-    emailInput.placeholder = '...';
-  
-    emailDiv.appendChild(emailLabel);
-    emailDiv.appendChild(emailInput);
-    userEditForm.appendChild(emailDiv);
-  
-    const roleDiv = document.createElement('div');
-    roleDiv.className = 'mb-3';
-  
-    const roleLabel = document.createElement('label');
-    roleLabel.htmlFor = 'userRole';
-    roleLabel.className = 'form-label';
-    roleLabel.textContent = 'Rôle';
-  
-    const roleSelect = document.createElement('select');
-    roleSelect.className = 'form-select';
-    roleSelect.ariaLabel = 'userRole';
-  
-    const defaultRoleOption = document.createElement('option');
-    defaultRoleOption.selected = true;
-    defaultRoleOption.textContent = 'Selectionner un rôle';
-  
-    const formateurOption = document.createElement('option');
-    formateurOption.value = 'Formateur';
-    formateurOption.textContent = 'Formateur-rice';
-  
-    const campusManagerOption = document.createElement('option');
-    campusManagerOption.value = 'Campus_manager';
-    campusManagerOption.textContent = 'Campus Manager';
-  
-    const apprenantOption = document.createElement('option');
-    apprenantOption.value = 'Apprenant';
-    apprenantOption.textContent = 'Apprenant-e';
-  
-    const responsablePedagogiqueOption = document.createElement('option');
-    responsablePedagogiqueOption.value = 'Responsable_pedagogique';
-    responsablePedagogiqueOption.textContent = 'Responsable pédagogique';
-  
-    const delegeOption = document.createElement('option');
-    delegeOption.value = 'Delegue';
-    delegeOption.textContent = 'Délégué-e';
-  
-    roleSelect.appendChild(defaultRoleOption);
-    roleSelect.appendChild(formateurOption);
-    roleSelect.appendChild(campusManagerOption);
-    roleSelect.appendChild(apprenantOption);
-    roleSelect.appendChild(responsablePedagogiqueOption);
-    roleSelect.appendChild(delegeOption);
-  
-    roleDiv.appendChild(roleLabel);
-    roleDiv.appendChild(roleSelect);
-    userEditForm.appendChild(roleDiv);
-  
-    const promoLinkDiv = document.createElement('div');
-    promoLinkDiv.className = 'mb-3';
-  
-    const promoLinkLabel = document.createElement('label');
-    promoLinkLabel.htmlFor = 'promoLink';
-    promoLinkLabel.className = 'form-check-label';
-    promoLinkLabel.textContent = "Promotion(s)";
-  
-    const promoLinkSelect = document.createElement('select');
-    promoLinkSelect.className = 'form-select';
-    promoLinkSelect.id = 'promoLink';
-    promoLinkSelect.multiple = true;
-    promoLinkSelect.dataset.placeholder = "Selectionner la/les promotion(s) de l’utilisateur";
-  
-    promoLinkDiv.appendChild(promoLinkLabel);
-    promoLinkDiv.appendChild(promoLinkSelect);
-    userEditForm.appendChild(promoLinkDiv);
-  
-    const activeAccountCheckDiv = document.createElement('div');
-    activeAccountCheckDiv.className = 'form-check';
-  
-    const activeAccountCheckInput = document.createElement('input');
-    activeAccountCheckInput.type = 'checkbox';
-    activeAccountCheckInput.className = 'form-check-input';
-    activeAccountCheckInput.id = 'activeAccountCheck';
-  
-    const activeAccountCheckLabel = document.createElement('label');
-    activeAccountCheckLabel.htmlFor = 'activeAccountCheck';
-    activeAccountCheckLabel.className = 'form-check-label';
-    activeAccountCheckLabel.textContent = 'Compte activé';
-  
-    activeAccountCheckDiv.appendChild(activeAccountCheckInput);
-    activeAccountCheckDiv.appendChild(activeAccountCheckLabel);
-    userEditForm.appendChild(activeAccountCheckDiv);
-  
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.className = 'd-grid gap-4 d-md-flex justify-content-md-end';
-  
-    const deleteButton = document.createElement('button');
-    deleteButton.type = 'button';
-    deleteButton.id = 'deleteUserButton';
-    deleteButton.className = 'btn btn-danger deleteUserButton';
-    deleteButton.textContent = 'Supprimer';
-  
-    const saveButton = document.createElement('button');
-    saveButton.type = 'button';
-    saveButton.id = 'saveUserButton';
-    saveButton.className = 'btn btn-primary saveUserButton';
-    saveButton.textContent = 'Sauvegarder';
-  
-    buttonsDiv.appendChild(deleteButton);
-    buttonsDiv.appendChild(saveButton);
-    userEditForm.appendChild(buttonsDiv);
-  
-    formContainer.appendChild(userEditForm);
-  
-    document.getElementById("main").append(userTitleButton, formContainer);
-  }
+  const userTitleButton = document.createElement("div");
+  userTitleButton.className = "userTitleButton";
+
+  const formHeader = document.createElement("div");
+  formHeader.className = "formHeader";
+
+  const title = document.createElement("h3");
+  title.textContent = "Création d'un utilisateur";
+
+  formHeader.appendChild(title);
+  userTitleButton.appendChild(formHeader);
+
+  const formContainer = document.createElement("div");
+
+  const userCreationForm = document.createElement("form");
+  userCreationForm.className = "userCreationForm";
+
+  const lastNameDiv = document.createElement("div");
+  lastNameDiv.className = "mb-3";
+
+  const lastNameLabel = document.createElement("label");
+  lastNameLabel.htmlFor = "newUserLastName";
+  lastNameLabel.className = "form-label";
+  lastNameLabel.textContent = "Nom";
+
+  const lastNameInput = document.createElement("input");
+  lastNameInput.type = "text";
+  lastNameInput.className = "form-control";
+  lastNameInput.id = "newUserLastName";
+  lastNameInput.placeholder = "...";
+
+  lastNameDiv.appendChild(lastNameLabel);
+  lastNameDiv.appendChild(lastNameInput);
+  userCreationForm.appendChild(lastNameDiv);
+
+  const firstNameDiv = document.createElement("div");
+  firstNameDiv.className = "mb-3";
+
+  const firstNameLabel = document.createElement("label");
+  firstNameLabel.htmlFor = "newUserFirstName";
+  firstNameLabel.className = "form-label";
+  firstNameLabel.textContent = "Prénom";
+
+  const firstNameInput = document.createElement("input");
+  firstNameInput.type = "text";
+  firstNameInput.className = "form-control";
+  firstNameInput.id = "newUserFirstName";
+  firstNameInput.placeholder = "...";
+
+  firstNameDiv.appendChild(firstNameLabel);
+  firstNameDiv.appendChild(firstNameInput);
+  userCreationForm.appendChild(firstNameDiv);
+
+  const emailDiv = document.createElement("div");
+  emailDiv.className = "mb-3";
+
+  const emailLabel = document.createElement("label");
+  emailLabel.htmlFor = "newUserEmail";
+  emailLabel.className = "form-label";
+  emailLabel.textContent = "Adresse email";
+
+  const emailInput = document.createElement("input");
+  emailInput.type = "email";
+  emailInput.className = "form-control";
+  emailInput.id = "newUserEmail";
+  emailInput.placeholder = "...";
+
+  emailDiv.appendChild(emailLabel);
+  emailDiv.appendChild(emailInput);
+  userCreationForm.appendChild(emailDiv);
+
+  const roleDiv = document.createElement("div");
+  roleDiv.className = "mb-3";
+
+  const roleLabel = document.createElement("label");
+  roleLabel.htmlFor = "newUserRole";
+  roleLabel.className = "form-label";
+  roleLabel.textContent = "Rôle";
+
+  const roleSelect = document.createElement("select");
+  roleSelect.className = "form-select";
+  roleSelect.ariaLabel = "newUserRole";
+
+  const defaultRoleOption = document.createElement("option");
+  defaultRoleOption.selected = true;
+  defaultRoleOption.textContent = "Selectionner un rôle";
+
+  const formateurOption = document.createElement("option");
+  formateurOption.value = "Formateur";
+  formateurOption.textContent = "Formateur-rice";
+
+  const campusManagerOption = document.createElement("option");
+  campusManagerOption.value = "Campus_manager";
+  campusManagerOption.textContent = "Campus Manager";
+
+  const apprenantOption = document.createElement("option");
+  apprenantOption.value = "Apprenant";
+  apprenantOption.textContent = "Apprenant-e";
+
+  const responsablePedagogiqueOption = document.createElement("option");
+  responsablePedagogiqueOption.value = "Responsable_pedagogique";
+  responsablePedagogiqueOption.textContent = "Responsable pédagogique";
+
+  const delegeOption = document.createElement("option");
+  delegeOption.value = "Delegue";
+  delegeOption.textContent = "Délégué-e";
+
+  roleSelect.appendChild(defaultRoleOption);
+  roleSelect.appendChild(formateurOption);
+  roleSelect.appendChild(campusManagerOption);
+  roleSelect.appendChild(apprenantOption);
+  roleSelect.appendChild(responsablePedagogiqueOption);
+  roleSelect.appendChild(delegeOption);
+
+  roleDiv.appendChild(roleLabel);
+  roleDiv.appendChild(roleSelect);
+  userCreationForm.appendChild(roleDiv);
+
+  const promoLinkDiv = document.createElement("div");
+  promoLinkDiv.className = "mb-3";
+
+  const promoLinkLabel = document.createElement("label");
+  promoLinkLabel.htmlFor = "promoLink";
+  promoLinkLabel.className = "form-check-label";
+  promoLinkLabel.textContent = "Promotion(s)";
+
+  const promoLinkSelect = document.createElement("select");
+  promoLinkSelect.className = "form-select";
+  promoLinkSelect.id = "promoLink";
+  promoLinkSelect.multiple = true;
+  promoLinkSelect.dataset.placeholder =
+    "Selectionner la/les promotion(s) de l’utilisateur";
+
+  promoLinkDiv.appendChild(promoLinkLabel);
+  promoLinkDiv.appendChild(promoLinkSelect);
+  userCreationForm.appendChild(promoLinkDiv);
+
+  const saveButtonDiv = document.createElement("div");
+  saveButtonDiv.className = "d-grid gap-4 d-md-flex justify-content-md-end";
+
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.id = "saveUserButton";
+  saveButton.className = "btn btn-primary saveUserButton";
+  saveButton.textContent = "Sauvegarder";
+
+  saveButtonDiv.appendChild(saveButton);
+  userCreationForm.appendChild(saveButtonDiv);
+
+  formContainer.appendChild(userCreationForm);
+
+  document.getElementById("main").append(userTitleButton, formContainer);
+}
+
+export function createUserEditForm(userName) {
+  const userTitleButton = document.createElement("div");
+  userTitleButton.className = "userTitleButton";
+
+  const formHeader = document.createElement("div");
+  formHeader.className = "formHeader";
+
+  const title = document.createElement("h3");
+  title.textContent = `Édition de l’utilisateur ${userName}`;
+
+  const description = document.createElement("p");
+  description.textContent = "les changements appliqués sont définitifs";
+
+  formHeader.appendChild(title);
+  formHeader.appendChild(description);
+  userTitleButton.appendChild(formHeader);
+
+  const formContainer = document.createElement("div");
+
+  const userEditForm = document.createElement("form");
+  userEditForm.className = "userEditForm";
+
+  const lastNameDiv = document.createElement("div");
+  lastNameDiv.className = "mb-3";
+
+  const lastNameLabel = document.createElement("label");
+  lastNameLabel.htmlFor = "userLastName";
+  lastNameLabel.className = "form-label";
+  lastNameLabel.textContent = "Nom";
+
+  const lastNameInput = document.createElement("input");
+  lastNameInput.type = "text";
+  lastNameInput.className = "form-control";
+  lastNameInput.id = "userLastName";
+  lastNameInput.placeholder = "...";
+
+  lastNameDiv.appendChild(lastNameLabel);
+  lastNameDiv.appendChild(lastNameInput);
+  userEditForm.appendChild(lastNameDiv);
+
+  const firstNameDiv = document.createElement("div");
+  firstNameDiv.className = "mb-3";
+
+  const firstNameLabel = document.createElement("label");
+  firstNameLabel.htmlFor = "userFirstName";
+  firstNameLabel.className = "form-label";
+  firstNameLabel.textContent = "Prénom";
+
+  const firstNameInput = document.createElement("input");
+  firstNameInput.type = "text";
+  firstNameInput.className = "form-control";
+  firstNameInput.id = "userFirstName";
+  firstNameInput.placeholder = "...";
+
+  firstNameDiv.appendChild(firstNameLabel);
+  firstNameDiv.appendChild(firstNameInput);
+  userEditForm.appendChild(firstNameDiv);
+
+  const emailDiv = document.createElement("div");
+  emailDiv.className = "mb-3";
+
+  const emailLabel = document.createElement("label");
+  emailLabel.htmlFor = "userEmail";
+  emailLabel.className = "form-label";
+  emailLabel.textContent = "Adresse email";
+
+  const emailInput = document.createElement("input");
+  emailInput.type = "email";
+  emailInput.className = "form-control";
+  emailInput.id = "userEmail";
+  emailInput.placeholder = "...";
+
+  emailDiv.appendChild(emailLabel);
+  emailDiv.appendChild(emailInput);
+  userEditForm.appendChild(emailDiv);
+
+  const roleDiv = document.createElement("div");
+  roleDiv.className = "mb-3";
+
+  const roleLabel = document.createElement("label");
+  roleLabel.htmlFor = "userRole";
+  roleLabel.className = "form-label";
+  roleLabel.textContent = "Rôle";
+
+  const roleSelect = document.createElement("select");
+  roleSelect.className = "form-select";
+  roleSelect.ariaLabel = "userRole";
+
+  const defaultRoleOption = document.createElement("option");
+  defaultRoleOption.selected = true;
+  defaultRoleOption.textContent = "Selectionner un rôle";
+
+  const formateurOption = document.createElement("option");
+  formateurOption.value = "Formateur";
+  formateurOption.textContent = "Formateur-rice";
+
+  const campusManagerOption = document.createElement("option");
+  campusManagerOption.value = "Campus_manager";
+  campusManagerOption.textContent = "Campus Manager";
+
+  const apprenantOption = document.createElement("option");
+  apprenantOption.value = "Apprenant";
+  apprenantOption.textContent = "Apprenant-e";
+
+  const responsablePedagogiqueOption = document.createElement("option");
+  responsablePedagogiqueOption.value = "Responsable_pedagogique";
+  responsablePedagogiqueOption.textContent = "Responsable pédagogique";
+
+  const delegeOption = document.createElement("option");
+  delegeOption.value = "Delegue";
+  delegeOption.textContent = "Délégué-e";
+
+  roleSelect.appendChild(defaultRoleOption);
+  roleSelect.appendChild(formateurOption);
+  roleSelect.appendChild(campusManagerOption);
+  roleSelect.appendChild(apprenantOption);
+  roleSelect.appendChild(responsablePedagogiqueOption);
+  roleSelect.appendChild(delegeOption);
+
+  roleDiv.appendChild(roleLabel);
+  roleDiv.appendChild(roleSelect);
+  userEditForm.appendChild(roleDiv);
+
+  const promoLinkDiv = document.createElement("div");
+  promoLinkDiv.className = "mb-3";
+
+  const promoLinkLabel = document.createElement("label");
+  promoLinkLabel.htmlFor = "promoLink";
+  promoLinkLabel.className = "form-check-label";
+  promoLinkLabel.textContent = "Promotion(s)";
+
+  const promoLinkSelect = document.createElement("select");
+  promoLinkSelect.className = "form-select";
+  promoLinkSelect.id = "promoLink";
+  promoLinkSelect.multiple = true;
+  promoLinkSelect.dataset.placeholder =
+    "Selectionner la/les promotion(s) de l’utilisateur";
+
+  promoLinkDiv.appendChild(promoLinkLabel);
+  promoLinkDiv.appendChild(promoLinkSelect);
+  userEditForm.appendChild(promoLinkDiv);
+
+  const activeAccountCheckDiv = document.createElement("div");
+  activeAccountCheckDiv.className = "form-check";
+
+  const activeAccountCheckInput = document.createElement("input");
+  activeAccountCheckInput.type = "checkbox";
+  activeAccountCheckInput.className = "form-check-input";
+  activeAccountCheckInput.id = "activeAccountCheck";
+
+  const activeAccountCheckLabel = document.createElement("label");
+  activeAccountCheckLabel.htmlFor = "activeAccountCheck";
+  activeAccountCheckLabel.className = "form-check-label";
+  activeAccountCheckLabel.textContent = "Compte activé";
+
+  activeAccountCheckDiv.appendChild(activeAccountCheckInput);
+  activeAccountCheckDiv.appendChild(activeAccountCheckLabel);
+  userEditForm.appendChild(activeAccountCheckDiv);
+
+  const buttonsDiv = document.createElement("div");
+  buttonsDiv.className = "d-grid gap-4 d-md-flex justify-content-md-end";
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.id = "deleteUserButton";
+  deleteButton.className = "btn btn-danger deleteUserButton";
+  deleteButton.textContent = "Supprimer";
+
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.id = "saveUserButton";
+  saveButton.className = "btn btn-primary saveUserButton";
+  saveButton.textContent = "Sauvegarder";
+
+  buttonsDiv.appendChild(deleteButton);
+  buttonsDiv.appendChild(saveButton);
+  userEditForm.appendChild(buttonsDiv);
+
+  formContainer.appendChild(userEditForm);
+
+  document.getElementById("main").append(userTitleButton, formContainer);
+}
 
 ////////////////////////////// Fin de la partie Utilisateurs //////////////////////////////
 
@@ -1883,197 +1881,197 @@ export function createDelayEditForm(learnerName) {
 }
 
 export function createAbsenceCreationForm() {
-    const absenceTitleButton = document.createElement('div');
-    absenceTitleButton.className = 'absenceTitleButton';
-  
-    const formHeader = document.createElement('div');
-    formHeader.className = 'formHeader';
-  
-    const title = document.createElement('h3');
-    title.textContent = 'Création d\'une absence';
-  
-    formHeader.appendChild(title);
-    absenceTitleButton.appendChild(formHeader);
-  
-    const formContainer = document.createElement('div');
-  
-    const absenceCreationForm = document.createElement('form');
-    absenceCreationForm.className = 'absenceCreationForm';
-  
-    const learnerAbsenceDiv = document.createElement('div');
-    learnerAbsenceDiv.className = 'mb-3';
-  
-    const learnerAbsenceLabel = document.createElement('label');
-    learnerAbsenceLabel.htmlFor = 'LearnerAbsence';
-    learnerAbsenceLabel.className = 'form-label';
-    learnerAbsenceLabel.textContent = 'Apprenant concerné';
-  
-    const learnerAbsenceSelect = document.createElement('select');
-    learnerAbsenceSelect.className = 'form-select';
-    learnerAbsenceSelect.id = 'LearnerAbsence';
-    learnerAbsenceSelect.ariaLabel = 'LearnerAbsence';
-  
-    const defaultOption = document.createElement('option');
-    defaultOption.selected = true;
-    defaultOption.textContent = 'Selectionner un apprenant';
-  
-    const option1 = document.createElement('option');
-    option1.value = '1';
-    option1.textContent = 'Example';
-  
-    const option2 = document.createElement('option');
-    option2.value = '2';
-    option2.textContent = 'Example';
-  
-    const option3 = document.createElement('option');
-    option3.value = '3';
-    option3.textContent = 'Example';
-  
-    learnerAbsenceSelect.appendChild(defaultOption);
-    learnerAbsenceSelect.appendChild(option1);
-    learnerAbsenceSelect.appendChild(option2);
-    learnerAbsenceSelect.appendChild(option3);
-  
-    learnerAbsenceDiv.appendChild(learnerAbsenceLabel);
-    learnerAbsenceDiv.appendChild(learnerAbsenceSelect);
-    absenceCreationForm.appendChild(learnerAbsenceDiv);
-  
-    const absenceDateDiv = document.createElement('div');
-    absenceDateDiv.className = 'mb-3';
-  
-    const absenceDateLabel = document.createElement('label');
-    absenceDateLabel.htmlFor = 'absenceDate';
-    absenceDateLabel.className = 'form-label';
-    absenceDateLabel.textContent = 'Date de l\'absence';
-  
-    const absenceDateInput = document.createElement('input');
-    absenceDateInput.type = 'date';
-    absenceDateInput.className = 'form-control';
-    absenceDateInput.id = 'absenceDate';
-    absenceDateInput.placeholder = 'JJ-MM-AAAA';
-  
-    absenceDateDiv.appendChild(absenceDateLabel);
-    absenceDateDiv.appendChild(absenceDateInput);
-    absenceCreationForm.appendChild(absenceDateDiv);
-  
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.className = 'd-grid gap-4 d-md-flex justify-content-md-end';
-  
-    const saveButton = document.createElement('button');
-    saveButton.type = 'button';
-    saveButton.id = 'saveAbsenceButton';
-    saveButton.className = 'btn btn-primary saveAbsenceButton';
-    saveButton.textContent = 'Sauvegarder';
-  
-    buttonsDiv.appendChild(saveButton);
-    absenceCreationForm.appendChild(buttonsDiv);
-  
-    formContainer.appendChild(absenceCreationForm);
-  
-    document.getElementById("main").append(absenceTitleButton, formContainer);
-  }
+  const absenceTitleButton = document.createElement("div");
+  absenceTitleButton.className = "absenceTitleButton";
 
-  export function createAbsenceEditForm(learnerName) {
-    const absenceTitleButton = document.createElement('div');
-    absenceTitleButton.className = 'absenceTitleButton';
-  
-    const formHeader = document.createElement('div');
-    formHeader.className = 'formHeader';
-  
-    const title = document.createElement('h3');
-    title.textContent = `Édition d'une absence de ${learnerName}`;
-  
-    const description = document.createElement('p');
-    description.textContent = 'les changements appliqués sont définitifs';
-  
-    formHeader.appendChild(title);
-    formHeader.appendChild(description);
-    absenceTitleButton.appendChild(formHeader);
-  
-    const formContainer = document.createElement('div');
-  
-    const absenceEditForm = document.createElement('form');
-    absenceEditForm.className = 'absenceCreationForm';
-  
-    const learnerAbsenceDiv = document.createElement('div');
-    learnerAbsenceDiv.className = 'mb-3';
-  
-    const learnerAbsenceLabel = document.createElement('label');
-    learnerAbsenceLabel.htmlFor = 'LearnerAbsence';
-    learnerAbsenceLabel.className = 'form-label';
-    learnerAbsenceLabel.textContent = 'Apprenant concerné';
-  
-    const learnerAbsenceSelect = document.createElement('select');
-    learnerAbsenceSelect.className = 'form-select';
-    learnerAbsenceSelect.id = 'LearnerAbsence';
-    learnerAbsenceSelect.ariaLabel = 'LearnerAbsence';
-  
-    const selectedOption = document.createElement('option');
-    selectedOption.selected = true;
-    selectedOption.textContent = learnerName;
-  
-    const option1 = document.createElement('option');
-    option1.value = '1';
-    option1.textContent = 'Example';
-  
-    const option2 = document.createElement('option');
-    option2.value = '2';
-    option2.textContent = 'Example';
-  
-    const option3 = document.createElement('option');
-    option3.value = '3';
-    option3.textContent = 'Example';
-  
-    learnerAbsenceSelect.appendChild(selectedOption);
-    learnerAbsenceSelect.appendChild(option1);
-    learnerAbsenceSelect.appendChild(option2);
-    learnerAbsenceSelect.appendChild(option3);
-  
-    learnerAbsenceDiv.appendChild(learnerAbsenceLabel);
-    learnerAbsenceDiv.appendChild(learnerAbsenceSelect);
-    absenceEditForm.appendChild(learnerAbsenceDiv);
-  
-    const absenceDateDiv = document.createElement('div');
-    absenceDateDiv.className = 'mb-3';
-  
-    const absenceDateLabel = document.createElement('label');
-    absenceDateLabel.htmlFor = 'absenceDate';
-    absenceDateLabel.className = 'form-label';
-    absenceDateLabel.textContent = 'Date de l\'absence';
-  
-    const absenceDateInput = document.createElement('input');
-    absenceDateInput.type = 'date';
-    absenceDateInput.className = 'form-control';
-    absenceDateInput.id = 'absenceDate';
-    absenceDateInput.placeholder = 'JJ-MM-AAAA';
-  
-    absenceDateDiv.appendChild(absenceDateLabel);
-    absenceDateDiv.appendChild(absenceDateInput);
-    absenceEditForm.appendChild(absenceDateDiv);
-  
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.className = 'd-grid gap-4 d-md-flex justify-content-md-end';
-  
-    const deleteButton = document.createElement('button');
-    deleteButton.type = 'button';
-    deleteButton.id = 'deleteAbsenceButton';
-    deleteButton.className = 'btn btn-danger deleteAbsenceButton';
-    deleteButton.textContent = 'Supprimer';
-  
-    const saveButton = document.createElement('button');
-    saveButton.type = 'button';
-    saveButton.id = 'saveAbsenceButton';
-    saveButton.className = 'btn btn-primary saveAbsenceButton';
-    saveButton.textContent = 'Sauvegarder';
-  
-    buttonsDiv.appendChild(deleteButton);
-    buttonsDiv.appendChild(saveButton);
-    absenceEditForm.appendChild(buttonsDiv);
-  
-    formContainer.appendChild(absenceEditForm);
-  
-    document.getElementById("main").append(absenceTitleButton, formContainer);
-  }
+  const formHeader = document.createElement("div");
+  formHeader.className = "formHeader";
+
+  const title = document.createElement("h3");
+  title.textContent = "Création d'une absence";
+
+  formHeader.appendChild(title);
+  absenceTitleButton.appendChild(formHeader);
+
+  const formContainer = document.createElement("div");
+
+  const absenceCreationForm = document.createElement("form");
+  absenceCreationForm.className = "absenceCreationForm";
+
+  const learnerAbsenceDiv = document.createElement("div");
+  learnerAbsenceDiv.className = "mb-3";
+
+  const learnerAbsenceLabel = document.createElement("label");
+  learnerAbsenceLabel.htmlFor = "LearnerAbsence";
+  learnerAbsenceLabel.className = "form-label";
+  learnerAbsenceLabel.textContent = "Apprenant concerné";
+
+  const learnerAbsenceSelect = document.createElement("select");
+  learnerAbsenceSelect.className = "form-select";
+  learnerAbsenceSelect.id = "LearnerAbsence";
+  learnerAbsenceSelect.ariaLabel = "LearnerAbsence";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.selected = true;
+  defaultOption.textContent = "Selectionner un apprenant";
+
+  const option1 = document.createElement("option");
+  option1.value = "1";
+  option1.textContent = "Example";
+
+  const option2 = document.createElement("option");
+  option2.value = "2";
+  option2.textContent = "Example";
+
+  const option3 = document.createElement("option");
+  option3.value = "3";
+  option3.textContent = "Example";
+
+  learnerAbsenceSelect.appendChild(defaultOption);
+  learnerAbsenceSelect.appendChild(option1);
+  learnerAbsenceSelect.appendChild(option2);
+  learnerAbsenceSelect.appendChild(option3);
+
+  learnerAbsenceDiv.appendChild(learnerAbsenceLabel);
+  learnerAbsenceDiv.appendChild(learnerAbsenceSelect);
+  absenceCreationForm.appendChild(learnerAbsenceDiv);
+
+  const absenceDateDiv = document.createElement("div");
+  absenceDateDiv.className = "mb-3";
+
+  const absenceDateLabel = document.createElement("label");
+  absenceDateLabel.htmlFor = "absenceDate";
+  absenceDateLabel.className = "form-label";
+  absenceDateLabel.textContent = "Date de l'absence";
+
+  const absenceDateInput = document.createElement("input");
+  absenceDateInput.type = "date";
+  absenceDateInput.className = "form-control";
+  absenceDateInput.id = "absenceDate";
+  absenceDateInput.placeholder = "JJ-MM-AAAA";
+
+  absenceDateDiv.appendChild(absenceDateLabel);
+  absenceDateDiv.appendChild(absenceDateInput);
+  absenceCreationForm.appendChild(absenceDateDiv);
+
+  const buttonsDiv = document.createElement("div");
+  buttonsDiv.className = "d-grid gap-4 d-md-flex justify-content-md-end";
+
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.id = "saveAbsenceButton";
+  saveButton.className = "btn btn-primary saveAbsenceButton";
+  saveButton.textContent = "Sauvegarder";
+
+  buttonsDiv.appendChild(saveButton);
+  absenceCreationForm.appendChild(buttonsDiv);
+
+  formContainer.appendChild(absenceCreationForm);
+
+  document.getElementById("main").append(absenceTitleButton, formContainer);
+}
+
+export function createAbsenceEditForm(learnerName) {
+  const absenceTitleButton = document.createElement("div");
+  absenceTitleButton.className = "absenceTitleButton";
+
+  const formHeader = document.createElement("div");
+  formHeader.className = "formHeader";
+
+  const title = document.createElement("h3");
+  title.textContent = `Édition d'une absence de ${learnerName}`;
+
+  const description = document.createElement("p");
+  description.textContent = "les changements appliqués sont définitifs";
+
+  formHeader.appendChild(title);
+  formHeader.appendChild(description);
+  absenceTitleButton.appendChild(formHeader);
+
+  const formContainer = document.createElement("div");
+
+  const absenceEditForm = document.createElement("form");
+  absenceEditForm.className = "absenceCreationForm";
+
+  const learnerAbsenceDiv = document.createElement("div");
+  learnerAbsenceDiv.className = "mb-3";
+
+  const learnerAbsenceLabel = document.createElement("label");
+  learnerAbsenceLabel.htmlFor = "LearnerAbsence";
+  learnerAbsenceLabel.className = "form-label";
+  learnerAbsenceLabel.textContent = "Apprenant concerné";
+
+  const learnerAbsenceSelect = document.createElement("select");
+  learnerAbsenceSelect.className = "form-select";
+  learnerAbsenceSelect.id = "LearnerAbsence";
+  learnerAbsenceSelect.ariaLabel = "LearnerAbsence";
+
+  const selectedOption = document.createElement("option");
+  selectedOption.selected = true;
+  selectedOption.textContent = learnerName;
+
+  const option1 = document.createElement("option");
+  option1.value = "1";
+  option1.textContent = "Example";
+
+  const option2 = document.createElement("option");
+  option2.value = "2";
+  option2.textContent = "Example";
+
+  const option3 = document.createElement("option");
+  option3.value = "3";
+  option3.textContent = "Example";
+
+  learnerAbsenceSelect.appendChild(selectedOption);
+  learnerAbsenceSelect.appendChild(option1);
+  learnerAbsenceSelect.appendChild(option2);
+  learnerAbsenceSelect.appendChild(option3);
+
+  learnerAbsenceDiv.appendChild(learnerAbsenceLabel);
+  learnerAbsenceDiv.appendChild(learnerAbsenceSelect);
+  absenceEditForm.appendChild(learnerAbsenceDiv);
+
+  const absenceDateDiv = document.createElement("div");
+  absenceDateDiv.className = "mb-3";
+
+  const absenceDateLabel = document.createElement("label");
+  absenceDateLabel.htmlFor = "absenceDate";
+  absenceDateLabel.className = "form-label";
+  absenceDateLabel.textContent = "Date de l'absence";
+
+  const absenceDateInput = document.createElement("input");
+  absenceDateInput.type = "date";
+  absenceDateInput.className = "form-control";
+  absenceDateInput.id = "absenceDate";
+  absenceDateInput.placeholder = "JJ-MM-AAAA";
+
+  absenceDateDiv.appendChild(absenceDateLabel);
+  absenceDateDiv.appendChild(absenceDateInput);
+  absenceEditForm.appendChild(absenceDateDiv);
+
+  const buttonsDiv = document.createElement("div");
+  buttonsDiv.className = "d-grid gap-4 d-md-flex justify-content-md-end";
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.id = "deleteAbsenceButton";
+  deleteButton.className = "btn btn-danger deleteAbsenceButton";
+  deleteButton.textContent = "Supprimer";
+
+  const saveButton = document.createElement("button");
+  saveButton.type = "button";
+  saveButton.id = "saveAbsenceButton";
+  saveButton.className = "btn btn-primary saveAbsenceButton";
+  saveButton.textContent = "Sauvegarder";
+
+  buttonsDiv.appendChild(deleteButton);
+  buttonsDiv.appendChild(saveButton);
+  absenceEditForm.appendChild(buttonsDiv);
+
+  formContainer.appendChild(absenceEditForm);
+
+  document.getElementById("main").append(absenceTitleButton, formContainer);
+}
 
 ////////////////////////////// Fin du General Content //////////////////////////////
 
@@ -2137,4 +2135,3 @@ export function createTableRow(
 }
 
 /////////////////////// Fin des lignes génériques du General Content ///////////////////////
-

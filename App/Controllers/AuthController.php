@@ -11,7 +11,6 @@ use App\Services\CSRFToken;
 use App\Services\Sanitize;
 use App\Services\IssetFormData;
 use App\Services\Password;
-use App\Services\Cors;
 
 final class AuthController
 {
@@ -20,7 +19,7 @@ final class AuthController
     // constructor
     public function __construct()
     {
-        $this->handleCors();
+
     }
 
     // traits
@@ -30,7 +29,6 @@ final class AuthController
     use Sanitize;
     use IssetFormData;
     use Password;
-    use Cors;
 
 
     public function homePage()
@@ -96,9 +94,14 @@ final class AuthController
             $userId = $user->getUuid();
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
-                $columnsData = ["password" => $hashedpassword];
+                $columnsData = [
+                    "password" => $hashedpassword,
+                    "active" => 1
+                ];
                 if ($userRepo->updatePassword($hashedpassword, $userId)) {
-                    $response = ['success' => true, 'message' => 'update success'];
+                    $userRole = $userRepo->findRole($userId);
+                    $_SESSION['role'] = $userRole['role'];
+                    $response = ['success' => true, 'message' => 'update success', 'role' => $userRole['role']];
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 } else {
@@ -131,11 +134,12 @@ final class AuthController
             $user = $userRepo->findOne('User', 'email', $email);
             $userPassword = $user->getPassword();
             if (password_verify($passwordInput, $userPassword)) {
-                $response = ['success' => true, 'message' => 'connexion success'];
                 $_SESSION['authenticate_user'] = true;
                 $userId = $user->getUuid();
                 $userRole = $userRepo->findRole($userId);
-                $_SESSION['role'] = $userRole;
+                //$userRole = 'Apprenant';
+                $_SESSION['role'] = $userRole['role'];
+                $response = ['success' => true, 'role' => $userRole['role'], 'message' => 'connexion success'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
             } else {
@@ -154,3 +158,4 @@ final class AuthController
     {
     }
 }
+

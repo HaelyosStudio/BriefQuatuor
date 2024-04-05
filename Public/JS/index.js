@@ -1,6 +1,6 @@
-import { createForm1, createForm2, createForm3, createMainContent, createCourseInfo, createPresenceButton, createPromotionRow, createUserRow, createGeneralContent, createTableRow, createPromoEditForm, createPromoForm, createLearnerCreationForm, createLearnerEditForm, createDelayCreationForm, createDelayEditForm, createAbsenceCreationForm, createAbsenceEditForm, createUserEditForm, createUserCreationForm } from './Imports/createSections.js';
+import { createFormEmail, createFormPassword, createFormLogin, createMainContent, createCourseInfo, createPromotionRow, createUserRow, createGeneralContent, createTableRow, createPromoEditForm, createPromoForm, createLearnerCreationForm, createLearnerEditForm, createDelayCreationForm, createDelayEditForm, createAbsenceCreationForm, createAbsenceEditForm, createUserEditForm, createUserCreationForm } from './Imports/createSections.js';
 
-window.onload = createForm1();
+window.onload = createFormEmail();
 
 $(document).ready(function() {
     $('#promoLink').select2({

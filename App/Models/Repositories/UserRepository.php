@@ -18,7 +18,7 @@ final class UserRepository extends Database
 
     public function findRole($userId)
     {
-        $req = $this->getDb()->prepare('SELECT User.uuid, Role.name FROM User
+        $req = $this->getDb()->prepare('SELECT Role.name as role FROM User
         JOIN Role On User.role_id = Role.id
         WHERE User.uuid = :userId');
 

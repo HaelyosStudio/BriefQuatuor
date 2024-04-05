@@ -1,10 +1,9 @@
 import {
-  createForm1,
-  createForm2,
-  createForm3,
+  createFormEmail,
+  createFormPassword,
+  createFormLogin,
   createMainContent,
   createCourseInfo,
-  createPresenceButton,
   createPromotionRow,
   createUserRow,
   createGeneralContent,
@@ -37,7 +36,6 @@ function createBootstrapToast(toastMessage, toastBg) {
 
   setTimeout(() => {
     toastBootstrap.hide();
-    
   }, 3000);
 
   return toastBootstrap;
@@ -72,7 +70,6 @@ export function fetchFormEmail() {
     .then((data) => {
       let toastMessage = "";
       let toastBg = "";
-      console.log(data.email_exists);
       if (data.email_exists === false) {
         // email not in database
         toastMessage =
@@ -80,14 +77,19 @@ export function fetchFormEmail() {
         toastBg = "danger";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm1 = document.querySelector(".registrationForm1");
-        
-        setTimeout((toastBootstrap) => {
-          registrationForm1.parentNode.removeChild(registrationForm1);
-          toastBootstrap.hide();
-          createForm1();
-        }, 3000, toastBootstrap);
+        const registrationFormEmail = document.querySelector(
+          ".registrationFormEmail"
+        );
 
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormEmail.parentNode.removeChild(registrationFormEmail);
+            toastBootstrap.hide();
+            createFormEmail();
+          },
+          3000,
+          toastBootstrap
+        );
       } else if (data.email_exists === true && data.active === false) {
         // email in database but not active
         toastMessage =
@@ -95,28 +97,39 @@ export function fetchFormEmail() {
         toastBg = "warning";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm1 = document.querySelector(".registrationForm1");
+        const registrationFormEmail = document.querySelector(
+          ".registrationFormEmail"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm1.parentNode.removeChild(registrationForm1);
-          toastBootstrap.hide();
-          createForm2();
-        }, 3000, toastBootstrap);
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormEmail.parentNode.removeChild(registrationFormEmail);
+            toastBootstrap.hide();
+            createFormPassword();
+          },
+          3000,
+          toastBootstrap
+        );
       } else if (data.email_exists === true && data.active === true) {
         // email in database and active
         toastMessage = "Le compte existe. Chargement en cours.";
         toastBg = "success";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm1 = document.querySelector(".registrationForm1");
+        const registrationFormEmail = document.querySelector(
+          ".registrationFormEmail"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm1.parentNode.removeChild(registrationForm1);
-          toastBootstrap.hide();
-          createForm3();
-        }, 3000, toastBootstrap);
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormEmail.parentNode.removeChild(registrationFormEmail);
+            toastBootstrap.hide();
+            createFormLogin();
+          },
+          3000,
+          toastBootstrap
+        );
       }
-
     })
     .catch((error) => {
       createBootstrapToast(
@@ -167,13 +180,21 @@ export function fetchConfirmPassword() {
         toastBg = "danger";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm2 = document.querySelector(".registrationForm2");
+        const registrationFormPassword = document.querySelector(
+          ".registrationFormPassword"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm2.parentNode.removeChild(registrationForm2);
-          toastBootstrap.hide();
-          createForm2();
-        }, 3000, toastBootstrap);
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormPassword.parentNode.removeChild(
+              registrationFormPassword
+            );
+            toastBootstrap.hide();
+            createFormPassword();
+          },
+          3000,
+          toastBootstrap
+        );
       } else if (
         data.success === false &&
         data.message === "erreur when updating"
@@ -184,32 +205,104 @@ export function fetchConfirmPassword() {
         toastBg = "warning";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm2 = document.querySelector(".registrationForm2");
+        const registrationFormPassword = document.querySelector(
+          ".registrationFormPassword"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm2.parentNode.removeChild(registrationForm2);
-          toastBootstrap.hide();
-          createForm2();
-        }, 3000, toastBootstrap);
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormPassword.parentNode.removeChild(
+              registrationFormPassword
+            );
+            toastBootstrap.hide();
+            createFormPassword();
+          },
+          3000,
+          toastBootstrap
+        );
       } else if (data.success === true) {
+        const role = data.role;
         // password updated successfully
         toastMessage = "Le mot de passe a été enregistré avec succès.";
         toastBg = "success";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm2 = document.querySelector(".registrationForm2");
+        const registrationFormPassword = document.querySelector(
+          ".registrationFormPassword"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm2.parentNode.removeChild(registrationForm2);
-          toastBootstrap.hide();
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormPassword.parentNode.removeChild(
+              registrationFormPassword
+            );
+            toastBootstrap.hide();
+          },
+          3000,
+          toastBootstrap
+        );
+        if (role === "Campus_manager" || role === "Responsable_pedagogique") {
           createMainContent();
-        }, 3000, toastBootstrap);
+          fetch(base_url + "test", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "A network error occurred: " +
+                    response.status +
+                    ". Please try again later."
+                );
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              // réponse attendue = plusieurs cours avec nom participants date
+              data.forEach(function (course) {
+                createCourseInfo(course.name, course.participants, course.date);
+              });
+            })
+            .catch((error) => {
+              console.error("Erreur lors de la requête :", error);
+            });
+        } else {
+          createMainContent();
+          createCourseInfo("CDA", 12, "05-04-2024");
+          createCourseInfo("DWWM2", 8, "05-04-2024");
+          // fetch(base_url + "test2", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          // })
+          //   .then((response) => {
+          //     if (!response.ok) {
+          //       throw new Error(
+          //         "A network error occurred: " +
+          //           response.status +
+          //           ". Please try again later."
+          //       );
+          //     }
+          //     return response.json();
+          //   })
+          //   .then((data) => {
+          //     console.log(data);
+          //     // réponse attendue = 1 cours avec nom partcipants date
+          //     createCourseInfo(data.name, data.participants, data.date);
+          //   })
+          //   .catch((error) => {
+          //     console.error("Erreur lors de la requête :", error);
+          //   });
+        }
       }
 
       // clear password input fields
       passwordInput.value = "";
       confirmPasswordInput.value = "";
-
     })
     .catch((error) => {
       createBootstrapToast(
@@ -246,44 +339,106 @@ export function fetchLogin() {
       return response.json();
     })
     .then((data) => {
-      
       let toastMessage = "";
       let toastBg = "";
       if (data.success === false) {
-        // passwords not identical
         toastMessage =
           "Le mot de passe que vous avez saisi est incorrect. Veuillez réessayer.";
         toastBg = "danger";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm3 = document.querySelector(".registrationForm3");
+        const registrationFormLogin = document.querySelector(
+          ".registrationFormLogin"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm3.parentNode.removeChild(registrationForm3);
-          toastBootstrap.hide();
-          createForm3();
-        }, 3000, toastBootstrap);
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormLogin.parentNode.removeChild(registrationFormLogin);
+            toastBootstrap.hide();
+            createFormLogin();
+          },
+          3000,
+          toastBootstrap
+        );
       } else if (data.success === true) {
-        // error when updating password
-        toastMessage =
-          "Mot de passe correct. Connexion en cours.";
+        const role = data.role;
+        toastMessage = "Mot de passe correct. Connexion en cours.";
         toastBg = "success";
 
         const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
-        const registrationForm3 = document.querySelector(".registrationForm3");
+        const registrationFormLogin = document.querySelector(
+          ".registrationFormLogin"
+        );
 
-        setTimeout((toastBootstrap) => {
-          registrationForm3.parentNode.removeChild(registrationForm3);
-          toastBootstrap.hide();
+        setTimeout(
+          (toastBootstrap) => {
+            registrationFormLogin.parentNode.removeChild(registrationFormLogin);
+            toastBootstrap.hide();
+          },
+          3000,
+          toastBootstrap
+        );
+        if (role === "Campus_manager" || role === "Responsable_pedagogique") {
           createMainContent();
-        }, 3000, toastBootstrap);
+          fetch(base_url + "test", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "A network error occurred: " +
+                    response.status +
+                    ". Please try again later."
+                );
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              // réponse attendue = plusieurs cours avec nom participants date
+              data.forEach(function (course) {
+                createCourseInfo(course.name, course.participants, course.date);
+              });
+            })
+            .catch((error) => {
+              console.error("Erreur lors de la requête :", error);
+            });
+        } else {
+          createMainContent();
+          createCourseInfo("CDA", 12, "05-04-2024");
+          createCourseInfo("DWWM2", 8, "05-04-2024");
+          // fetch(base_url + "test2", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          // })
+          //   .then((response) => {
+          //     if (!response.ok) {
+          //       throw new Error(
+          //         "A network error occurred: " +
+          //           response.status +
+          //           ". Please try again later."
+          //       );
+          //     }
+          //     return response.json();
+          //   })
+          //   .then((data) => {
+          //     console.log(data);
+          //     // réponse attendue = 1 cours avec nom partcipants date
+          //     createCourseInfo(data.name, data.participants, data.date);
+          //   })
+          //   .catch((error) => {
+          //     console.error("Erreur lors de la requête :", error);
+          //   });
+        }
       }
-
-      // clear password input fields
-      passwordInput.value = "";
-
     })
     .catch((error) => {
+      console.log(error);
       createBootstrapToast(
         "An error occurred while making the request. Please check your network connection and try again.",
         "danger"
