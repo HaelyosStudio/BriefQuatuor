@@ -22,9 +22,9 @@ final class UserHasCoursRepository extends Database
 
     /**
      * @param  string $userUuid
-     * @return array
+     * @return array<string, mixed> | false
      */
-    public function getPromoNameByUser(string $userUuid): array
+    public function getPromoNameByUser(string $userUuid): array | false
     {
         $sql =
             "SELECT DISTINCT
@@ -36,9 +36,9 @@ final class UserHasCoursRepository extends Database
         JOIN USER u ON
             UHP.user_id = u.uuid
         WHERE
-            u.uuid = :userUuid";
+            u.uuid = UUID_TO_BIN(:userUuid)";
         $params = [
-            'user_uuid' => $userUuid
+            'userUuid' => $userUuid
         ];
         try {
             $stmt = $this->getDb()->prepare($sql);
@@ -51,7 +51,13 @@ final class UserHasCoursRepository extends Database
         }
     }
 
-    public function getNumberUserAndCoursIdByCurrentDateAndPeriodAndUserUuid(string $period, string $userUuid)
+
+    /**
+     * @param  string $period
+     * @param  string $userUuid
+     * @return array<string, mixed> | false
+     */
+    public function getNumberUserAndCoursIdByCurrentDateAndPeriodAndUserUuid(string $period, string $userUuid): array | false
     {
         $sql =
             "SELECT
@@ -64,39 +70,7 @@ final class UserHasCoursRepository extends Database
             JOIN cours c ON
                 UHC.cours_id = c.id
             WHERE
-                c.day = CURRENT_DATE AND c.period = :period AND u.uuid = :user_uuid";
-
-        $params = [
-            'period' => $period,
-            'user_uuid' => $userUuid
-        ];
-        try {
-            $stmt = $this->getDb()->prepare($sql);
-            $stmt->execute($params);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $stmt->closeCursor();
-            return $result;
-        } catch (PDOException $error) {
-            throw new Exception('Error: ' . $error->getMessage());
-        }
-    }
-
-
-    public function getIdCoursByUserAndCurrentDayAndPeriod(string $period, string $userUuid)
-    {
-        $sql =
-            "SELECT
-                c.id AS cours_id
-            FROM
-                cours c
-            JOIN userhascours UHC ON
-                c.id = UHC.cours_id
-            JOIN USER u ON
-                UHC.user_id = u.uuid
-            WHERE
-                c.day = CURRENT_DATE 
-            AND c.period = :period 
-            AND u.uuid = :userUuid";
+                c.day = CURRENT_DATE AND c.period = :period AND u.uuid = UUID_TO_BIN(:userUuid)";
 
         $params = [
             'period' => $period,
@@ -156,11 +130,11 @@ final class UserHasCoursRepository extends Database
             FROM
                 userhascours uhc
             JOIN cours c ON
-                uhc.cours_id = :cours_id
+                uhc.cours_id = c.id
             WHERE
-                c.day = CURRENT_DATE AND uhc.presence = 1";
+                c.day = CURRENT_DATE AND uhc.presence = 1 AND c.id = :coursId";
 
-        $params = ['cours_id' => $coursId];
+        $params = ['coursId' => $coursId];
 
         try {
             $stmt = $this->getDb()->prepare($sql);
