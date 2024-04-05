@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-final class Userhascours
+final class UserHasCours
 {
     // params
     private string $user_id;

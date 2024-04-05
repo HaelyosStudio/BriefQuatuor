@@ -19,7 +19,6 @@ final class AuthController
     // constructor
     public function __construct()
     {
-
     }
 
     // traits
@@ -36,7 +35,8 @@ final class AuthController
         $this->render('home');
     }
 
-    public function isLogged() {
+    public function isLogged()
+    {
         if ($_SESSION['authenticate_user'] === false | $this->notEmpty($_SESSION['authenticate_user']) === false) {
             return false;
         } else {
@@ -158,4 +158,3 @@ final class AuthController
     {
     }
 }
-

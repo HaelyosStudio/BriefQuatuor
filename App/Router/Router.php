@@ -16,6 +16,7 @@ class Router
 
         $method = $_SERVER['REQUEST_METHOD'];
         switch ($uri) {
+                /*AuhtController */
             case URL_HOMEPAGE:
                 $user = new AuthController();
                 if ($method === 'GET') {
@@ -40,6 +41,7 @@ class Router
                     $user->userLogin();
                 }
                 break;
+                /*PromotionController */
             case URL_HOMEPAGE . 'promo/accessPromo':
                 $user = new PromotionController();
                 if ($method === 'POST') {
@@ -76,11 +78,29 @@ class Router
                     $user->deletePromo();
                 }
                 break;
-
-            case URL_HOMEPAGE . 'cours/validate_presence':
+                /* CoursController */
+            case URL_HOMEPAGE . 'cours':
+                $cours = new CoursController();
+                if ($method === 'GET') {
+                    $cours->getCoursAndPromoByUser();
+                }
+                break;
+            case URL_HOMEPAGE . 'cours/validatePresence':
                 $cours = new CoursController();
                 if ($method === 'GET') {
                     $cours->validatePresence();
+                }
+                break;
+            case URL_HOMEPAGE . 'cours/getSignatures':
+                $cours = new CoursController();
+                if ($method === 'GET') {
+                    $cours->getSignaturesByCoursOnCurrentDay();
+                }
+                break;
+            case URL_HOMEPAGE . 'administrations/getPresences':
+                $cours = new CoursController();
+                if ($method === 'GET') {
+                    $cours->getSummaryCurrentDay();
                 }
                 break;
 
