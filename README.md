@@ -9,7 +9,9 @@ We had 4 days of 8 hours to complete it.
 ## Authors
 
 Github profil : https://github.com/HaelyosStudio
+
 Github profil : https://github.com/M0orph3us
+
 Github profil : https://github.com/Vellanos
 
 ## Installing the project
