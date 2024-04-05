@@ -94,10 +94,6 @@ final class AuthController
             $userId = $user->getUuid();
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
-                $columnsData = [
-                    "password" => $hashedpassword,
-                    "active" => 1
-                ];
                 if ($userRepo->updatePassword($hashedpassword, $userId)) {
                     $userRole = $userRepo->findRole($userId);
                     $_SESSION['role'] = $userRole['role'];
@@ -137,6 +133,8 @@ final class AuthController
                 $_SESSION['authenticate_user'] = true;
                 $userId = $user->getUuid();
                 $userRole = $userRepo->findRole($userId);
+                $_SESSION['role'] = $userRole['role'];
+                $response = ['success' => true, 'role' => $userRole['role'], 'message' => 'connexion success'];
                 //$userRole = 'Apprenant';
                 $_SESSION['role'] = $userRole['role'];
                 $response = ['success' => true, 'role' => $userRole['role'], 'message' => 'connexion success'];
