@@ -11,7 +11,6 @@ use App\Services\CSRFToken;
 use App\Services\Sanitize;
 use App\Services\IssetFormData;
 use App\Services\Password;
-use App\Services\Cors;
 
 final class AuthController
 {
@@ -93,15 +92,12 @@ final class AuthController
             $email = $_SESSION['email'];
             $user = $userRepo->findOne('User', 'email', $email);
             $userId = $user->getUuid();
-            $userRole = $_SESSION['role'];
             if ($this->checkDoublePassword($body['registrationPassword'], $body['registrationConfirmPassword'])) {
                 $hashedpassword = password_hash($body['registrationPassword'], PASSWORD_DEFAULT);
-                $columnsData = [
-                    "password" => $hashedpassword,
-                    "active" => 1
-                ];
                 if ($userRepo->updatePassword($hashedpassword, $userId)) {
-                    $response = ['success' => true, 'message' => 'update success', 'role' => $userRole];
+                    $userRole = $userRepo->findRole($userId);
+                    $_SESSION['role'] = $userRole['role'];
+                    $response = ['success' => true, 'message' => 'update success', 'role' => $userRole['role']];
                     header('Content-Type: application/json');
                     echo json_encode($response);
                 } else {
@@ -137,9 +133,8 @@ final class AuthController
                 $_SESSION['authenticate_user'] = true;
                 $userId = $user->getUuid();
                 $userRole = $userRepo->findRole($userId);
-                //$userRole = 'Apprenant';
-                $_SESSION['role'] = $userRole;
-                $response = ['success' => true, 'role' => $userRole, 'message' => 'connexion success'];
+                $_SESSION['role'] = $userRole['role'];
+                $response = ['success' => true, 'role' => $userRole['role'], 'message' => 'connexion success'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
             } else {
