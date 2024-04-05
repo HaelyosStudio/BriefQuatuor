@@ -79,6 +79,12 @@ class Router
                 }
                 break;
                 /* CoursController */
+            case URL_HOMEPAGE . 'cours':
+                $cours = new CoursController();
+                if ($method === 'GET') {
+                    $cours->getCoursAndPromoByUser();
+                }
+                break;
             case URL_HOMEPAGE . 'cours/validatePresence':
                 $cours = new CoursController();
                 if ($method === 'GET') {
@@ -88,7 +94,7 @@ class Router
             case URL_HOMEPAGE . 'cours/getSignatures':
                 $cours = new CoursController();
                 if ($method === 'GET') {
-                    $cours->getSignaturesCurrentDay();
+                    $cours->getSignaturesByCoursOnCurrentDay();
                 }
                 break;
             case URL_HOMEPAGE . 'administrations/getPresences':
