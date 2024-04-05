@@ -1,5 +1,26 @@
-import { createFormEmail, createFormPassword, createFormLogin, createMainContent, createCourseInfo, createPromotionRow, createUserRow, createGeneralContent, createTableRow, createPromoEditForm, createPromoForm, createLearnerCreationForm, createLearnerEditForm, createDelayCreationForm, createDelayEditForm, createAbsenceCreationForm, createAbsenceEditForm, createUserEditForm, createUserCreationForm } from './createSections.js';
-const base_url = "http://briefquatuor/";
+import {
+  createFormEmail,
+  createFormPassword,
+  createFormLogin,
+  createMainContent,
+  createCourseInfo,
+  createPromotionRow,
+  createUserRow,
+  createGeneralContent,
+  createTableRow,
+  createPromoEditForm,
+  createPromoForm,
+  createLearnerCreationForm,
+  createLearnerEditForm,
+  createDelayCreationForm,
+  createDelayEditForm,
+  createAbsenceCreationForm,
+  createAbsenceEditForm,
+  createUserEditForm,
+  createUserCreationForm,
+} from "./createSections.js";
+// const base_url = "http://briefquatuor/";
+const base_url = "http://cda/Projets/BriefQuatuor/";
 
 function createBootstrapToast(toastMessage, toastBg) {
   const toast = document.createElement("div");
@@ -233,7 +254,7 @@ export function fetchConfirmPassword() {
         );
         if (role === "Campus_manager" || role === "Responsable_pedagogique") {
           createMainContent();
-          fetch(base_url + "cours", {
+          fetch(base_url + "administrations/getPresences", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -253,7 +274,12 @@ export function fetchConfirmPassword() {
               console.log(data);
               // réponse attendue = plusieurs cours avec nom participants date
               data.forEach((course) => {
-                createCourseInfo(course.promoName, course.nbUsers, course.currentDay, course.coursId);
+                createCourseInfo(
+                  course.promoName,
+                  course.nbUsers,
+                  course.currentDay,
+                  course.coursId
+                );
               });
             })
             .catch((error) => {
@@ -280,7 +306,12 @@ export function fetchConfirmPassword() {
             .then((data) => {
               console.log(data);
               // réponse attendue = 1 cours avec nom partcipants date
-              createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+              createCourseInfo(
+                data.promoName,
+                data.nbUsers,
+                data.currentDay,
+                data.coursId
+              );
             })
             .catch((error) => {
               console.error("Erreur lors de la requête :", error);
@@ -389,12 +420,21 @@ export function fetchLogin() {
               // réponse attendue = plusieurs cours avec nom participants date
               if (Array.isArray(data)) {
                 for (const course of data) {
-                  createCourseInfo(course.promoName, course.nbUsers, course.currentDay, course.coursId);
+                  createCourseInfo(
+                    course.promoName,
+                    course.nbUsers,
+                    course.currentDay,
+                    course.coursId
+                  );
                 }
               } else {
-                createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+                createCourseInfo(
+                  data.promoName,
+                  data.nbUsers,
+                  data.currentDay,
+                  data.coursId
+                );
               }
-              
             })
             .catch((error) => {
               console.error("Erreur lors de la requête :", error);
@@ -419,9 +459,14 @@ export function fetchLogin() {
             })
             .then((data) => {
               console.log(data);
-              console.log('TEST ICI');
+              console.log("TEST ICI");
               // réponse attendue = 1 cours avec nom partcipants date
-              createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+              createCourseInfo(
+                data.promoName,
+                data.nbUsers,
+                data.currentDay,
+                data.coursId
+              );
             })
             .catch((error) => {
               console.error("Erreur lors de la requête :", error);
@@ -442,95 +487,92 @@ export function fetchValidatePresence(courseId) {
   const formData = {
     coursId: courseId,
   };
-  fetch(base_url + 'cours/validatePresence', {
-    method: 'POST',
+  fetch(base_url + "cours/validatePresence", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(formData)
+    body: JSON.stringify(formData),
   })
-  .then((response) => {
-    console.log(response)
-    if (!response.ok) {
-      throw new Error("Erreur de réseau : " + response.status);
-    }
-    return response.json();
-  })
-  .then((data) => {
-    let toastMessage = "";
-    let toastBg = "";
-    console.log(data);
-    if (data.success === true) {
-      toastMessage =
-          "Signature receuillie avec succès.";
+    .then((response) => {
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Erreur de réseau : " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      let toastMessage = "";
+      let toastBg = "";
+      console.log(data);
+      if (data.success === true) {
+        toastMessage = "Signature receuillie avec succès.";
         toastBg = "success";
-      const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
+        const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
 
-      const button = document.getElementById(courseId + 'btn');
-      button.textContent = "Signature recueillie";
-      button.classList.remove("btn-primary");
-      button.classList.add("btn-secondary");
-      var newButton = button.cloneNode(true);
-      button.parentNode.replaceChild(newButton, button);
+        const button = document.getElementById(courseId + "btn");
+        button.textContent = "Signature recueillie";
+        button.classList.remove("btn-primary");
+        button.classList.add("btn-secondary");
+        var newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
 
-      setTimeout(
-        (toastBootstrap) => {
-          toastBootstrap.hide();
-        },
-        2000,
-        toastBootstrap
-      );
-    } else {
-      toastMessage =
-      "Erreur lors de la signature. Veuillez réessayer.";
-    toastBg = "danger";
+        setTimeout(
+          (toastBootstrap) => {
+            toastBootstrap.hide();
+          },
+          2000,
+          toastBootstrap
+        );
+      } else {
+        toastMessage = "Erreur lors de la signature. Veuillez réessayer.";
+        toastBg = "danger";
 
-    const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
+        const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
 
-    setTimeout(
-      (toastBootstrap) => {
-        toastBootstrap.hide();
-      },
-      2000,
-      toastBootstrap
-    );
-    }
-
-  })
-  .catch((error) => {
-    console.error("Erreur lors de la requête :", error);
-  });
+        setTimeout(
+          (toastBootstrap) => {
+            toastBootstrap.hide();
+          },
+          2000,
+          toastBootstrap
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la requête :", error);
+    });
 }
 
 export function fetchDisplayPromo() {
-  fetch(base_url + 'promo/displayPromo', {
-    method: 'POST',
+  fetch(base_url + "promo/displayPromo", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify()
+    body: JSON.stringify(),
   })
-  .then((response) => {
-    console.log(response)
-    if (!response.ok) {
-      throw new Error("Erreur de réseau : " + response.status);
-    }
-    return response.json();
-  })
-  .then((data) => {
-    if (data.success === true) {
-      const promoTableBody = document.getElementById('promoTableBody');
-      data.promoName.forEach((name, index) => {
-        const startDate = data.promoDateStart[index];
-        const endDate = data.promoDateFin[index];
-        const places = data.promoPlaces[index];
-        createPromotionRow(name, startDate, endDate, places);
-      });
-    } else {
-      console.log(data.message);
-    }
-  })
-  .catch((error) => {
-    console.error("Erreur lors de la requête :", error);
-  });
+    .then((response) => {
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Erreur de réseau : " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success === true) {
+        const promoTableBody = document.getElementById("promoTableBody");
+        data.promoName.forEach((name, index) => {
+          const startDate = data.promoDateStart[index];
+          const endDate = data.promoDateFin[index];
+          const places = data.promoPlaces[index];
+          createPromotionRow(name, startDate, endDate, places);
+        });
+      } else {
+        console.log(data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la requête :", error);
+    });
 }

@@ -36,9 +36,16 @@ final class CoursController
             $currentTimeFormat = $currentTime->format('H:i');
             if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
                 $period = "Matin";
-            }
-            if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
+            } else if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
                 $period = "Après-midi";
+            } else {
+                $response = [
+                    "endDay" => true,
+                    "success" => true,
+                    "message" => "La journée est finie."
+                ];
+                header('Content-Type: application/json');
+                echo json_encode($response);
             }
 
             $userRepo = new UserRepository();
@@ -47,9 +54,10 @@ final class CoursController
 
             $UHCRepo = new UserHasCoursRepository();
             $getCoursIdAndNbUserByPeriod = $UHCRepo->getNumberUserAndCoursIdByCurrentDateAndPeriodAndUserUuid($period, $userUuid);
+            $getPromoNameByUser = $UHCRepo->getPromoNameByUser($userUuid);
+
             $coursId = $getCoursIdAndNbUserByPeriod['cours_id'];
             $nbUsers = $getCoursIdAndNbUserByPeriod['nb_users'];
-            $getPromoNameByUser = $UHCRepo->getPromoNameByUser($userUuid);
             $promoName = $getPromoNameByUser['promo_name'];
             $currentDate = date('d/m/Y');
 
@@ -187,7 +195,7 @@ final class CoursController
             if (is_null($getPresence) === false) {
                 $response = [
                     'success' => true,
-                    'message' => "Votre role ne vous permet pas d'intéragir avec cette page.",
+                    'message' => "",
                     'presence' => $getPresence
                 ];
                 header('Content-Type: application/json');
