@@ -24,7 +24,7 @@ final class UserHasCoursRepository extends Database
      * @param  string $userUuid
      * @return array
      */
-    public function getPromoNameByUser(string $userUuid): array
+    public function getPromoNameByUser(string $userUuid): array | false
     {
         $sql =
             "SELECT DISTINCT
@@ -36,9 +36,9 @@ final class UserHasCoursRepository extends Database
         JOIN USER u ON
             UHP.user_id = u.uuid
         WHERE
-            u.uuid = :userUuid";
+            u.uuid = UUID_TO_BIN(:userUuid)";
         $params = [
-            'user_uuid' => $userUuid
+            'userUuid' => $userUuid
         ];
         try {
             $stmt = $this->getDb()->prepare($sql);
@@ -64,11 +64,11 @@ final class UserHasCoursRepository extends Database
             JOIN cours c ON
                 UHC.cours_id = c.id
             WHERE
-                c.day = CURRENT_DATE AND c.period = :period AND u.uuid = :user_uuid";
+                c.day = CURRENT_DATE AND c.period = :period AND u.uuid = UUID_TO_BIN(:userUuid)";
 
         $params = [
             'period' => $period,
-            'user_uuid' => $userUuid
+            'userUuid' => $userUuid
         ];
         try {
             $stmt = $this->getDb()->prepare($sql);

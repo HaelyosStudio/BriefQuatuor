@@ -27,7 +27,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item ms-auto">
-                            <button class="nav-link active">Connexion</button>
+                            <button class="nav-link active" id="logButton">Connexion</button>
                         </li>
                     </ul>
                 </div>

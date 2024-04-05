@@ -1,4 +1,4 @@
-import { fetchConfirmPassword, fetchFormEmail, fetchLogin } from "./fetch.js";
+import { fetchConfirmPassword, fetchFormEmail, fetchLogin, fetchValidatePresence, fetchDisplayPromo } from "./fetch.js";
 import { newPromo } from "./buttonScripts.js";
 
 export function createFormEmail() {
@@ -206,6 +206,8 @@ export function createMainContent() {
   promotionsTab.setAttribute("aria-controls", "nav-profile");
   promotionsTab.setAttribute("aria-selected", "false");
   promotionsTab.textContent = "Promotions";
+
+  promotionsTab.addEventListener('click', fetchDisplayPromo);
 
   const usersTab = document.createElement("button");
   usersTab.classList.add("nav-link");
@@ -437,7 +439,7 @@ export function createMainContent() {
 
 //////////////////////////////////// Fin du main content ////////////////////////////////////
 
-export function createCourseInfo(name, participants, date) {
+export function createCourseInfo(name, participants, date, courseId) {
   const courseContainer = document.createElement("div");
   courseContainer.classList.add("courseContainer");
 
@@ -472,7 +474,13 @@ export function createCourseInfo(name, participants, date) {
 
   const button = document.createElement("button");
   button.classList.add("btn", "btn-primary");
+  button.setAttribute('id', courseId + 'btn');
   button.textContent = "Valider présence";
+  if (button.id === courseId + 'btn') {
+    button.addEventListener('click', function () {
+      fetchValidatePresence(courseId);
+    });
+  }
 
   presenceButton.appendChild(button);
 
@@ -526,6 +534,8 @@ export function createPromotionRow(name, startDate, endDate, places) {
   deleteButton.classList.add("tableButtons");
   deleteButton.textContent = "Supprimer";
   deleteTd.appendChild(deleteButton);
+
+  
 
   row.appendChild(checkboxTh);
   row.appendChild(nameTd);

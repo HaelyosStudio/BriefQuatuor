@@ -233,7 +233,7 @@ export function fetchConfirmPassword() {
         );
         if (role === "Campus_manager" || role === "Responsable_pedagogique") {
           createMainContent();
-          fetch(base_url + "test", {
+          fetch(base_url + "cours", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -252,8 +252,8 @@ export function fetchConfirmPassword() {
             .then((data) => {
               console.log(data);
               // réponse attendue = plusieurs cours avec nom participants date
-              data.forEach(function (course) {
-                createCourseInfo(course.name, course.participants, course.date);
+              data.forEach((course) => {
+                createCourseInfo(course.promoName, course.nbUsers, course.currentDay, course.coursId);
               });
             })
             .catch((error) => {
@@ -261,32 +261,30 @@ export function fetchConfirmPassword() {
             });
         } else {
           createMainContent();
-          createCourseInfo("CDA", 12, "05-04-2024");
-          createCourseInfo("DWWM2", 8, "05-04-2024");
-          // fetch(base_url + "test2", {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          // })
-          //   .then((response) => {
-          //     if (!response.ok) {
-          //       throw new Error(
-          //         "A network error occurred: " +
-          //           response.status +
-          //           ". Please try again later."
-          //       );
-          //     }
-          //     return response.json();
-          //   })
-          //   .then((data) => {
-          //     console.log(data);
-          //     // réponse attendue = 1 cours avec nom partcipants date
-          //     createCourseInfo(data.name, data.participants, data.date);
-          //   })
-          //   .catch((error) => {
-          //     console.error("Erreur lors de la requête :", error);
-          //   });
+          fetch(base_url + "cours", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "A network error occurred: " +
+                    response.status +
+                    ". Please try again later."
+                );
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              // réponse attendue = 1 cours avec nom partcipants date
+              createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+            })
+            .catch((error) => {
+              console.error("Erreur lors de la requête :", error);
+            });
         }
       }
 
@@ -370,7 +368,7 @@ export function fetchLogin() {
         );
         if (role === "Campus_manager" || role === "Responsable_pedagogique") {
           createMainContent();
-          fetch(base_url + "test", {
+          fetch(base_url + "cours", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -389,41 +387,45 @@ export function fetchLogin() {
             .then((data) => {
               console.log(data);
               // réponse attendue = plusieurs cours avec nom participants date
-              data.forEach(function (course) {
-                createCourseInfo(course.name, course.participants, course.date);
-              });
+              if (Array.isArray(data)) {
+                for (const course of data) {
+                  createCourseInfo(course.promoName, course.nbUsers, course.currentDay, course.coursId);
+                }
+              } else {
+                createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+              }
+              
             })
             .catch((error) => {
               console.error("Erreur lors de la requête :", error);
             });
         } else {
           createMainContent();
-          createCourseInfo("CDA", 12, "05-04-2024");
-          createCourseInfo("DWWM2", 8, "05-04-2024");
-          // fetch(base_url + "test2", {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          // })
-          //   .then((response) => {
-          //     if (!response.ok) {
-          //       throw new Error(
-          //         "A network error occurred: " +
-          //           response.status +
-          //           ". Please try again later."
-          //       );
-          //     }
-          //     return response.json();
-          //   })
-          //   .then((data) => {
-          //     console.log(data);
-          //     // réponse attendue = 1 cours avec nom partcipants date
-          //     createCourseInfo(data.name, data.participants, data.date);
-          //   })
-          //   .catch((error) => {
-          //     console.error("Erreur lors de la requête :", error);
-          //   });
+          fetch(base_url + "cours", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "A network error occurred: " +
+                    response.status +
+                    ". Please try again later."
+                );
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              console.log('TEST ICI');
+              // réponse attendue = 1 cours avec nom partcipants date
+              createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+            })
+            .catch((error) => {
+              console.error("Erreur lors de la requête :", error);
+            });
         }
       }
     })
@@ -434,4 +436,101 @@ export function fetchLogin() {
         "danger"
       );
     });
+}
+
+export function fetchValidatePresence(courseId) {
+  const formData = {
+    coursId: courseId,
+  };
+  fetch(base_url + 'cours/validatePresence', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then((response) => {
+    console.log(response)
+    if (!response.ok) {
+      throw new Error("Erreur de réseau : " + response.status);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    let toastMessage = "";
+    let toastBg = "";
+    console.log(data);
+    if (data.success === true) {
+      toastMessage =
+          "Signature receuillie avec succès.";
+        toastBg = "success";
+      const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
+
+      const button = document.getElementById(courseId + 'btn');
+      button.textContent = "Signature recueillie";
+      button.classList.remove("btn-primary");
+      button.classList.add("btn-secondary");
+      var newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
+
+      setTimeout(
+        (toastBootstrap) => {
+          toastBootstrap.hide();
+        },
+        2000,
+        toastBootstrap
+      );
+    } else {
+      toastMessage =
+      "Erreur lors de la signature. Veuillez réessayer.";
+    toastBg = "danger";
+
+    const toastBootstrap = createBootstrapToast(toastMessage, toastBg);
+
+    setTimeout(
+      (toastBootstrap) => {
+        toastBootstrap.hide();
+      },
+      2000,
+      toastBootstrap
+    );
+    }
+
+  })
+  .catch((error) => {
+    console.error("Erreur lors de la requête :", error);
+  });
+}
+
+export function fetchDisplayPromo() {
+  fetch(base_url + 'promo/displayPromo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify()
+  })
+  .then((response) => {
+    console.log(response)
+    if (!response.ok) {
+      throw new Error("Erreur de réseau : " + response.status);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    if (data.success === true) {
+      const promoTableBody = document.getElementById('promoTableBody');
+      data.promoName.forEach((name, index) => {
+        const startDate = data.promoDateStart[index];
+        const endDate = data.promoDateFin[index];
+        const places = data.promoPlaces[index];
+        createPromotionRow(name, startDate, endDate, places);
+      });
+    } else {
+      console.log(data.message);
+    }
+  })
+  .catch((error) => {
+    console.error("Erreur lors de la requête :", error);
+  });
 }

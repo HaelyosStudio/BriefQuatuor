@@ -10,6 +10,7 @@ use App\Services\CSRFToken;
 use App\Services\Sanitize;
 use App\Services\IssetFormData;
 use DateTimeImmutable;
+use DateTimeZone;
 
 final class CoursController
 {
@@ -47,13 +48,15 @@ final class CoursController
             $nbUsers = $getCoursIdAndNbUserByPeriod['nb_users'];
             $getPromoNameByUser = $UHCRepo->getPromoNameByUser($userUuid);
             $promoName = $getPromoNameByUser['promo_name'];
+            $currentDate = date('d/m/Y');
 
             $response = [
                 "success" => true,
-                "message" => "La journée est passée, vous ne pouvez plus signer.",
+                "message" => "Problème getCours.",
                 "promoName" => $promoName,
                 "coursId" => $coursId,
-                "nbUsers" => $nbUsers
+                "nbUsers" => $nbUsers,
+                "currentDay" => $currentDate
             ];
             header('Content-Type: application/json');
             echo json_encode($response);
@@ -75,15 +78,19 @@ final class CoursController
             $body = json_decode($rawBody, true);
             if ($this->issetFormData($body)) {
                 if ($this->notEmpty($body)) {
-                    $coursId = $body['cours_id'];
+                    $coursId = htmlentities($body['coursId']);
                     $userRepo = new UserRepository();
                     $user = $userRepo->findOne('user', 'email', $_SESSION['email'], 1);
                     $userUuid = $user->getUuid();
 
-                    if (date('H:i') > '09:00' && date('H:i') < '12:30') {
-                        $time = '09:00';
-                    } else if (date('H:i') > '13:30' && date('H:i') < '17:00') {
-                        $time = '13:30';
+                    $timeZone = new DateTimeZone('Europe/Paris');
+                    $currentTime = new DateTimeImmutable('now', $timeZone);
+                    $currentTimeFormat = $currentTime->format('H:i');
+                    if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
+                        $time = new DateTimeImmutable('09:00');
+                    }
+                    if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
+                        $time = new DateTimeImmutable('13:00');
                     } else {
                         $response = [
                             "success" => false,
@@ -93,11 +100,7 @@ final class CoursController
                         echo json_encode($response);
                     };
                     $UHCRepo = new UserHasCoursRepository();
-                    date_default_timezone_set('Europe/Paris');
-                    $currentTime = date('H:i');
-                    $currentDateTime = new DateTimeImmutable($currentTime);
-                    $dateTime = new DateTimeImmutable($time);
-                    $timeDiff = $currentDateTime->diff($dateTime);
+                    $timeDiff = $currentTime->diff($time);
                     $minutesDiff = $timeDiff->format("%i");
 
                     $data = [
@@ -105,7 +108,7 @@ final class CoursController
                         'cours_id' => $coursId,
                         'presence' => 1,
                     ];
-                    if ($minutesDiff > 15) {
+                    if ($minutesDiff > "15") {
                         $data['delay'] = 1;
 
                         if ($UHCRepo->updateUserHasCours($data)) {
@@ -176,8 +179,8 @@ final class CoursController
             $body = json_decode($rawBody, true);
 
             $coursId = htmlentities($body['cours_id']);
-            $$UHCRepository = new UserHasCoursRepository();
-            $getPresence = $$UHCRepository->getSignCurrentDay($coursId);
+            $UHCRepository = new UserHasCoursRepository();
+            $getPresence = $UHCRepository->getSignCurrentDayByCours($coursId);
             if (is_null($getPresence) === false) {
                 $response = [
                     'success' => true,
@@ -210,12 +213,16 @@ final class CoursController
         if (in_array($_SESSION['role'], $acceptedRole)) {
             $rawBody = file_get_contents("php://input");
             $body = json_decode($rawBody, true);
-
             $coursId = htmlentities($body['cours_id']);
-            $$UHCRepository = new UserHasCoursRepository();
-            $getPresence = $$UHCRepository->getSignCurrentDay($coursId);
-            $getAbsence = $$UHCRepository->getNotSignCurrentDay($coursId);
-            $canStillSign = $$UHCRepository->canStillSign($coursId,);
+            if (date('H:i') > '09:00' && date('H:i') < '12:30') {
+                $period = 'Matin';
+            } else if (date('H:i') > '13:30' && date('H:i') < '17:00') {
+                $period = 'Après-midi';
+            };
+            $UHCRepository = new UserHasCoursRepository();
+            $getPresence = $UHCRepository->getSignCurrentDayByCours($coursId);
+            $getAbsence = $UHCRepository->getNotSignCurrentDay($coursId);
+            $canStillSign = $UHCRepository->canStillSign($coursId, $period);
 
             $response = [
                 'success' => true,
