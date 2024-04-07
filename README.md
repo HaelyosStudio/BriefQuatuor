@@ -1,13 +1,25 @@
-# Create a MVC structure & SQL request with SGBD MySQL
+# Create a backend API & SPA for frontend
 
-This project aims to master MVC architecture & SQL [Simplon Grenoble](https://simplon.co/).
+This team project aims to create an SPA that consumes an API. To do this, there were 3 of us including HaelyosStudio for the front end and Vellanos as well as M0orph3us for the backend.
+We had to create an interface to allow students to sign their class attendance, with administrators who could modify any element.
+
+We had 4 days of 8 hours to complete it.
+[Simplon Grenoble](https://simplon.co/).
+
+## Authors
+
+Github profil : https://github.com/HaelyosStudio
+
+Github profil : https://github.com/M0orph3us
+
+Github profil : https://github.com/Vellanos
 
 ## Installing the project
 
 ### Clone the project locally
 
 ```
-git clone https://github.com/M0orph3us/Brief_Five_Composer
+git clone https://github.com/HaelyosStudio/BriefQuatuor
 
 ```
 
@@ -44,10 +56,6 @@ With PHP server, Wamp or Mamp
 ### Enable Sass compilation
 
 To see your style updated when changed, run the "npm run watch" on your CLI. Sass will automatically compile your code.
-
-## Authors
-
-Github profil : https://github.com/M0orph3us
 
 ## Credits
 

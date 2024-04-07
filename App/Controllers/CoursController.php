@@ -31,12 +31,22 @@ final class CoursController
     {
         $acceptedRole = ['Formateur', 'Delegue', 'Apprenant'];
         if (in_array($_SESSION['role'], $acceptedRole)) {
-            date_default_timezone_set('Europe/Paris');
-            if (date('H:i') > '09:00' && date('H:i') < '12:30') {
-                $period = 'Matin';
-            } else if (date('H:i') > '13:30' && date('H:i') < '17:00') {
-                $period = 'Après-midi';
-            };
+            $timeZone = new DateTimeZone('Europe/Paris');
+            $currentTime = new DateTimeImmutable('now', $timeZone);
+            $currentTimeFormat = $currentTime->format('H:i');
+            if ($currentTimeFormat > '09:00' && $currentTimeFormat < '12:30') {
+                $period = "Matin";
+            } else if ($currentTimeFormat > '13:30' && $currentTimeFormat < '17:00') {
+                $period = "Après-midi";
+            } else {
+                $response = [
+                    "endDay" => true,
+                    "success" => true,
+                    "message" => "La journée est finie."
+                ];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }
 
             $userRepo = new UserRepository();
             $user = $userRepo->findOne('user', 'email', $_SESSION['email'], 1);
@@ -44,9 +54,10 @@ final class CoursController
 
             $UHCRepo = new UserHasCoursRepository();
             $getCoursIdAndNbUserByPeriod = $UHCRepo->getNumberUserAndCoursIdByCurrentDateAndPeriodAndUserUuid($period, $userUuid);
+            $getPromoNameByUser = $UHCRepo->getPromoNameByUser($userUuid);
+
             $coursId = $getCoursIdAndNbUserByPeriod['cours_id'];
             $nbUsers = $getCoursIdAndNbUserByPeriod['nb_users'];
-            $getPromoNameByUser = $UHCRepo->getPromoNameByUser($userUuid);
             $promoName = $getPromoNameByUser['promo_name'];
             $currentDate = date('d/m/Y');
 
@@ -114,7 +125,7 @@ final class CoursController
                         if ($UHCRepo->updateUserHasCours($data)) {
                             $response = [
                                 "success" => true,
-                                "message" => "Validation réussie.",
+                                "message" => "Validation réussie avec un retard.",
                             ];
                             header('Content-Type: application/json');
                             echo json_encode($response);
@@ -132,7 +143,7 @@ final class CoursController
                         if ($UHCRepo->updateUserHasCours($data)) {
                             $response = [
                                 "success" => true,
-                                "message" => "Validation réussie.",
+                                "message" => "Validation réussie sans retard.",
                             ];
                             header('Content-Type: application/json');
                             echo json_encode($response);
@@ -184,7 +195,7 @@ final class CoursController
             if (is_null($getPresence) === false) {
                 $response = [
                     'success' => true,
-                    'message' => "Votre role ne vous permet pas d'intéragir avec cette page.",
+                    'message' => "",
                     'presence' => $getPresence
                 ];
                 header('Content-Type: application/json');

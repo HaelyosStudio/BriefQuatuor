@@ -77,7 +77,7 @@ final class PromotionController
                 'promoDateStart' => $arrayDateStart,
                 'promoDateFin' => $arrayDateFin,
                 'promoPlaces' => $arrayPlaces,
-                ];
+            ];
             header('Content-Type: application/json');
             echo json_encode($response);
         } else {
@@ -115,17 +115,17 @@ final class PromotionController
                     $response = ['success' => false, 'message' => 'erreur when updating'];
                     header('Content-Type: application/json');
                     echo json_encode($response);
-                }
+                };
             } else {
                 $response = ['success' => false, 'message' => 'Clé(s) manquante(s) dans la requête'];
                 header('Content-Type: application/json');
                 echo json_encode($response);
-            }
+            };
         } else {
             $response = ['success' => false, 'message' => 'wrong role'];
             header('Content-Type: application/json');
             echo json_encode($response);
-        }
+        };
     }
 
     public function createPromo()
