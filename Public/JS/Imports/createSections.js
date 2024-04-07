@@ -330,7 +330,7 @@ export function createMainContent() {
   promotionsThead.appendChild(promotionsTr);
 
   const promotionsTbody = document.createElement("tbody");
-  promotionsTbody.classList.add("table-group-divider");
+  promotionsTbody.classList.add("table-group-divider", "tableBodyContainer");
 
   promotionsTable.appendChild(promotionsThead);
   promotionsTable.appendChild(promotionsTbody);
@@ -546,7 +546,7 @@ export function createPromotionRow(name, startDate, endDate, places) {
   row.appendChild(editTd);
   row.appendChild(deleteTd);
 
-  document.getElementById("main").appendChild(row);
+  document.querySelector(".tableBodyContainer").appendChild(row);
 }
 
 export function createPromoForm() {

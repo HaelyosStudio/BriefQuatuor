@@ -362,71 +362,73 @@ export function fetchLogin() {
           (toastBootstrap) => {
             registrationFormLogin.parentNode.removeChild(registrationFormLogin);
             toastBootstrap.hide();
+
+            if (role === "Campus_manager" || role === "Responsable_pedagogique") {
+              createMainContent();
+              fetch(base_url + "cours", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(
+                      "A network error occurred: " +
+                        response.status +
+                        ". Please try again later."
+                    );
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data);
+                  // réponse attendue = plusieurs cours avec nom participants date
+                  if (Array.isArray(data)) {
+                    for (const course of data) {
+                      createCourseInfo(course.promoName, course.nbUsers, course.currentDay, course.coursId);
+                    }
+                  } else {
+                    createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+                  }
+                  
+                })
+                .catch((error) => {
+                  console.error("Erreur lors de la requête :", error);
+                });
+            } else {
+              createMainContent();
+              fetch(base_url + "cours", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(
+                      "A network error occurred: " +
+                        response.status +
+                        ". Please try again later."
+                    );
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data);
+                  console.log('TEST ICI');
+                  // réponse attendue = 1 cours avec nom partcipants date
+                  createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
+                })
+                .catch((error) => {
+                  console.error("Erreur lors de la requête :", error);
+                });
+            }
           },
           3000,
           toastBootstrap
         );
-        if (role === "Campus_manager" || role === "Responsable_pedagogique") {
-          createMainContent();
-          fetch(base_url + "cours", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "A network error occurred: " +
-                    response.status +
-                    ". Please try again later."
-                );
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log(data);
-              // réponse attendue = plusieurs cours avec nom participants date
-              if (Array.isArray(data)) {
-                for (const course of data) {
-                  createCourseInfo(course.promoName, course.nbUsers, course.currentDay, course.coursId);
-                }
-              } else {
-                createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
-              }
-              
-            })
-            .catch((error) => {
-              console.error("Erreur lors de la requête :", error);
-            });
-        } else {
-          createMainContent();
-          fetch(base_url + "cours", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "A network error occurred: " +
-                    response.status +
-                    ". Please try again later."
-                );
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log(data);
-              console.log('TEST ICI');
-              // réponse attendue = 1 cours avec nom partcipants date
-              createCourseInfo(data.promoName, data.nbUsers, data.currentDay, data.coursId);
-            })
-            .catch((error) => {
-              console.error("Erreur lors de la requête :", error);
-            });
-        }
+        
       }
     })
     .catch((error) => {
@@ -519,11 +521,13 @@ export function fetchDisplayPromo() {
   })
   .then((data) => {
     if (data.success === true) {
-      const promoTableBody = document.getElementById('promoTableBody');
       data.promoName.forEach((name, index) => {
+        const button = document.getElementById('nav-profile-tab');
         const startDate = data.promoDateStart[index];
         const endDate = data.promoDateFin[index];
         const places = data.promoPlaces[index];
+        var newButton = button.cloneNode(true);
+      button.parentNode.replaceChild(newButton, button);
         createPromotionRow(name, startDate, endDate, places);
       });
     } else {
